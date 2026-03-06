@@ -1,9 +1,34 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabase/client";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
+
+  const handleLogin = async () => {
+    setLoading(true);
+
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    setLoading(false);
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    router.push("/dashboard");
+  };
 
   return (
     <>
@@ -58,7 +83,12 @@ export default function LoginPage() {
         <div className="field">
           <label>Email</label>
           <div className="input-wrap">
-            <input type="email" placeholder="e.g. john@company.com" />
+            <input
+              type="email"
+              placeholder="e.g. john@company.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
         </div>
 
@@ -68,6 +98,8 @@ export default function LoginPage() {
             <input
               type={showPassword ? "text" : "password"}
               placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <button
               className="toggle-pw"
@@ -79,8 +111,13 @@ export default function LoginPage() {
           </div>
         </div>
 
-        <button className="btn-primary" type="button">
-          Sign In
+        <button
+          className="btn-primary"
+          type="button"
+          onClick={handleLogin}
+          disabled={loading}
+        >
+          {loading ? "Signing in..." : "Sign In"}
         </button>
 
         <div className="divider-or">
