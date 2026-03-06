@@ -149,7 +149,7 @@ export default function LoginPage() {
         </button>
 
         <p className="form-footer">
-          Need access? <a href="#">Contact your administrator</a>
+          Need access? <a href="https://thearmanqureshi.vercel.app/#contactsec">Contact the administrator</a>
         </p>
       </section>
     </>
