@@ -82,28 +82,6 @@ body {
   z-index: 1;
 }
 
-.logo-icon {
-  width: 36px;
-  height: 36px;
-  background: var(--accent);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.logo-icon svg {
-  width: 20px;
-  height: 20px;
-}
-
-.logo-name {
-  font-family: var(--font-serif);
-  font-size: 1.3rem;
-  letter-spacing: -0.02em;
-  color: var(--text);
-}
-
 .hero-copy {
   z-index: 1;
 }

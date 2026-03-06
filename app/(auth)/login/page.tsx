@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase/client";
+import Image from "next/image";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -50,36 +51,42 @@ export default function LoginPage() {
         <div className="grid-lines"></div>
 
         <div className="logo">
-          <div className="logo-icon">
-            <span>SP</span>
-          </div>
-          <span className="logo-name">StitchPay</span>
+          <Image
+            src="/logo.png"
+            alt="StitchPay"
+            width={140}
+            height={40}
+            priority
+          />
         </div>
 
         <div className="hero-copy">
           <h1>
-            Wages,<br />
-            <em>woven</em><br />
-            with precision.
+            Every stitch.
+            <br />
+            <em>Every rupee.</em>
+            <br />
+            Accounted for.
           </h1>
           <p>
-            Manage monthly payroll, track disbursements, and keep every
-            thread of your workforce finances in order — all in one place.
+            Built for garment units and tailoring workshops — StitchPay tracks
+            piece-rate output per worker and converts it into accurate wages
+            automatically. No more manual registers, no more calculation errors.
           </p>
         </div>
 
         <div className="stat-row">
           <div className="stat">
-            <div className="stat-num">99.9%</div>
-            <div className="stat-label">Uptime</div>
+            <div className="stat-num">Zero</div>
+            <div className="stat-label">Manual Errors</div>
           </div>
           <div className="stat">
-            <div className="stat-num">2 min</div>
-            <div className="stat-label">Avg. Payout</div>
+            <div className="stat-num">100%</div>
+            <div className="stat-label">Worker Clarity</div>
           </div>
           <div className="stat">
-            <div className="stat-num">ISO 27001</div>
-            <div className="stat-label">Certified</div>
+            <div className="stat-num">Piece-rate</div>
+            <div className="stat-label">Auto Wage Calc</div>
           </div>
         </div>
       </section>
