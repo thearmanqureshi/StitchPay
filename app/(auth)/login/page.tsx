@@ -52,7 +52,7 @@ export default function LoginPage() {
 
         <div className="logo">
           <Image
-            src="/logo.png"
+            src="/Logo.png"
             alt="StitchPay"
             width={140}
             height={40}
