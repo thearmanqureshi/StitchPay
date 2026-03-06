@@ -100,7 +100,7 @@ export default function LoginPage() {
           <p>Sign in to your StitchPay account</p>
         </div>
 
-        <div className="field">
+        <div className="field" id="field-email">
           <label>Email</label>
           <div className="input-wrap">
             <input
@@ -112,7 +112,7 @@ export default function LoginPage() {
           </div>
         </div>
 
-        <div className="field">
+        <div className="field" id="field-password">
           <label>Password</label>
           <div className="input-wrap">
             <input

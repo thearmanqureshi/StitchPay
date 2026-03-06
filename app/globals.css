@@ -390,11 +390,11 @@ body {
   animation: fadeUp 0.5s ease both;
   animation-delay: 0.3s;
 }
-.field:nth-child(1) {
+#field-email {
   animation: fadeUp 0.5s ease both;
   animation-delay: 0.38s;
 }
-.field:nth-child(2) {
+#field-password {
   animation: fadeUp 0.5s ease both;
   animation-delay: 0.44s;
 }
