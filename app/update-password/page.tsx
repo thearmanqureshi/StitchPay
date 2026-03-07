@@ -1,58 +1,50 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { supabase } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 
 export default function UpdatePasswordPage() {
-  const router = useRouter();
   const [password, setPassword] = useState("");
-  const [ready, setReady] = useState(false);
+  const router = useRouter();
 
-  useEffect(() => {
-    const { data: listener } = supabase.auth.onAuthStateChange(
-      async (event) => {
-        if (event === "PASSWORD_RECOVERY") {
-          setReady(true);
-        }
-      }
-    );
-
-    return () => {
-      listener.subscription.unsubscribe();
-    };
-  }, []);
-
-  const updatePassword = async () => {
+  const handleUpdate = async () => {
     const { error } = await supabase.auth.updateUser({
-      password,
+      password: password,
     });
 
     if (error) {
-      alert("Password update failed");
-      return;
+      alert("Error updating password");
+    } else {
+      alert("Password updated successfully");
+      router.push("/login");
     }
-
-    alert("Password updated successfully");
-    router.push("/login");
   };
 
-  if (!ready) {
-    return <p>Validating reset link...</p>;
-  }
-
   return (
-    <div style={{ padding: 40, maxWidth: 400, margin: "auto" }}>
-      <h2>Set a new password</h2>
+    <div style={{ padding: "40px", maxWidth: "400px", margin: "auto" }}>
+      <h2>Create a new password</h2>
 
       <input
         type="password"
         placeholder="New password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        style={{
+          width: "100%",
+          padding: "10px",
+          marginTop: "20px",
+        }}
       />
 
-      <button onClick={updatePassword}>
+      <button
+        onClick={handleUpdate}
+        style={{
+          marginTop: "20px",
+          padding: "10px",
+          width: "100%",
+        }}
+      >
         Update Password
       </button>
     </div>
