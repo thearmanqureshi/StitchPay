@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase/client";
-import Image from "next/image";
+import AuthLayout from "@/components/auth-layout";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -45,113 +45,73 @@ export default function LoginPage() {
   };
 
   return (
-    <>
-      {/* LEFT */}
-      <section className="left">
-        <div className="grid-lines"></div>
+    <AuthLayout>
+      <div className="form-header">
+        <h2>Welcome back</h2>
+        <p>Sign in to your StitchPay account</p>
+      </div>
 
-        <div className="logo">
-          <Image
-            src="/Logo.png"
-            alt="StitchPay"
-            width={140}
-            height={40}
-            priority
+      {/* EMAIL */}
+      <div className="field" id="field-email">
+        <label>Email</label>
+        <div className="input-wrap">
+          <input
+            type="email"
+            placeholder="e.g. thearmanqureshi@stitchpay.app"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
+      </div>
 
-        <div className="hero-copy">
-          <h1>
-            Every stitch.
-            <br />
-            <em>Every rupee.</em>
-            <br />
-            Accounted for.
-          </h1>
-          <p>
-            Built for garment units and tailoring workshops — StitchPay tracks
-            piece-rate output per worker and converts it into accurate wages
-            automatically. No more manual registers, no more calculation errors.
-          </p>
+      {/* PASSWORD */}
+      <div className="field" id="field-password">
+        <label>Password</label>
+        <div className="input-wrap">
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="••••••••"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
+          <button
+            className="toggle-pw"
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? "Hide" : "Show"}
+          </button>
         </div>
+      </div>
 
-        <div className="stat-row">
-          <div className="stat">
-            <div className="stat-num">Zero</div>
-            <div className="stat-label">Manual Errors</div>
-          </div>
-          <div className="stat">
-            <div className="stat-num">100%</div>
-            <div className="stat-label">Worker Clarity</div>
-          </div>
-          <div className="stat">
-            <div className="stat-num">Piece-rate</div>
-            <div className="stat-label">Auto Wage Calc</div>
-          </div>
-        </div>
-      </section>
+      <button
+        className="btn-primary"
+        type="button"
+        onClick={handleLogin}
+        disabled={loading}
+      >
+        {loading ? "Signing in..." : "Sign In"}
+      </button>
 
-      <div className="divider"></div>
+      <div className="divider-or">
+        <span>or</span>
+      </div>
 
-      {/* RIGHT */}
-      <section className="right">
-        <div className="form-header">
-          <h2>Welcome back</h2>
-          <p>Sign in to your StitchPay account</p>
-        </div>
+      <button
+        className="btn-reset"
+        type="button"
+        onClick={() => router.push("/forgot-password")}
+      >
+        Reset Password
+      </button>
 
-        <div className="field" id="field-email">
-          <label>Email</label>
-          <div className="input-wrap">
-            <input
-              type="email"
-              placeholder="e.g. thearmanqureshi@stitchpay.app"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-        </div>
-
-        <div className="field" id="field-password">
-          <label>Password</label>
-          <div className="input-wrap">
-            <input
-              type={showPassword ? "text" : "password"}
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <button
-              className="toggle-pw"
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? "Hide" : "Show"}
-            </button>
-          </div>
-        </div>
-
-        <button
-          className="btn-primary"
-          type="button"
-          onClick={handleLogin}
-          disabled={loading}
-        >
-          {loading ? "Signing in..." : "Sign In"}
-        </button>
-
-        <div className="divider-or">
-          <span>or</span>
-        </div>
-
-        <button className="btn-reset" type="button" onClick={() => router.push("/forgot-password")}>
-          Reset Password
-        </button>
-
-        <p className="form-footer">
-          Need access? <a href="https://thearmanqureshi.vercel.app/#contactsec">Contact the administrator</a>
-        </p>
-      </section>
-    </>
+      <p className="form-footer">
+        Need access?{" "}
+        <a href="https://thearmanqureshi.vercel.app/#contactsec">
+          Contact the administrator
+        </a>
+      </p>
+    </AuthLayout>
   );
 }

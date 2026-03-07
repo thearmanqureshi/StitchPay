@@ -173,6 +173,24 @@ body {
 }
 
 /* ── Form fields ── */
+.icon-badge {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: var(--accent-dim);
+  border: 1px solid rgba(200, 240, 96, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+
+.icon-badge svg {
+  width: 24px;
+  height: 24px;
+  color: var(--accent);
+}
+
 .field {
   margin-bottom: 20px;
   position: relative;
@@ -233,6 +251,13 @@ body {
 .field input:focus + svg,
 .input-wrap:focus-within svg {
   color: var(--accent);
+}
+
+.field-hint {
+  font-size: 0.76rem;
+  color: var(--muted);
+  margin-top: 6px;
+  line-height: 1.5;
 }
 
 /* reorder so icon sits above input in DOM for sibling trick */
@@ -302,8 +327,37 @@ body {
 .btn-primary:hover::after {
   opacity: 0.08;
 }
-.btn-primary:active {
-  transform: translateY(0);
+
+.btn-ghost {
+  width: 100%;
+  padding: 13px;
+  background: transparent;
+  color: var(--muted);
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.88rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    color 0.2s,
+    background 0.2s;
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-ghost svg {
+  width: 14px;
+  height: 14px;
+}
+
+.btn-ghost:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .divider-or {
@@ -390,11 +444,19 @@ body {
   animation: fadeUp 0.5s ease both;
   animation-delay: 0.3s;
 }
+.icon-badge {
+  animation: fadeUp 0.5s ease both;
+  animation-delay: 0.3s;
+}
 #field-email {
   animation: fadeUp 0.5s ease both;
   animation-delay: 0.38s;
 }
 #field-password {
+  animation: fadeUp 0.5s ease both;
+  animation-delay: 0.44s;
+}
+#field-confirm-password {
   animation: fadeUp 0.5s ease both;
   animation-delay: 0.44s;
 }
@@ -409,6 +471,10 @@ body {
 .btn-reset {
   animation: fadeUp 0.5s ease both;
   animation-delay: 0.58s;
+}
+.btn-ghost {
+  animation: fadeUp 0.5s ease both;
+  animation-delay: 0.62s;
 }
 .form-footer {
   animation: fadeUp 0.5s ease both;
