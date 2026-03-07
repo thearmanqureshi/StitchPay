@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import AuthLayout from "@/components/auth-layout";
@@ -9,8 +9,23 @@ export default function UpdatePasswordPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [checking, setChecking] = useState(true);
 
   const router = useRouter();
+
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data } = await supabase.auth.getSession();
+
+      if (!data.session) {
+        router.replace("/login");
+      } else {
+        setChecking(false);
+      }
+    };
+
+    checkSession();
+  }, [router]);
 
   const handleUpdate = async () => {
     if (password.length < 6) {
@@ -39,9 +54,12 @@ export default function UpdatePasswordPage() {
     }
   };
 
+  if (checking) return null;
+
   return (
     <AuthLayout>
       <div>
+
         <div className="icon-badge">
           <svg
             viewBox="0 0 24 24"
@@ -62,9 +80,8 @@ export default function UpdatePasswordPage() {
           <p>Enter and confirm your new StitchPay password.</p>
         </div>
 
-        <div className="field" id="field-password">
+        <div className="field">
           <label>New password</label>
-
           <div className="input-wrap">
             <input
               type="password"
@@ -75,9 +92,8 @@ export default function UpdatePasswordPage() {
           </div>
         </div>
 
-        <div className="field" id="field-confirm-password">
+        <div className="field">
           <label>Confirm password</label>
-
           <div className="input-wrap">
             <input
               type="password"
