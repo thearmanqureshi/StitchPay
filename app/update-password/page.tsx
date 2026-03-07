@@ -80,7 +80,7 @@ export default function UpdatePasswordPage() {
           <p>Enter and confirm your new StitchPay password.</p>
         </div>
 
-        <div className="field">
+        <div className="field" id="field-password">
           <label>New password</label>
           <div className="input-wrap">
             <input
@@ -92,7 +92,7 @@ export default function UpdatePasswordPage() {
           </div>
         </div>
 
-        <div className="field">
+        <div className="field" id="field-confirm-password">
           <label>Confirm password</label>
           <div className="input-wrap">
             <input
