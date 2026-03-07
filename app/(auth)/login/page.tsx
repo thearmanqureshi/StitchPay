@@ -57,7 +57,7 @@ export default function LoginPage() {
         <div className="input-wrap">
           <input
             type="email"
-            placeholder="e.g. thearmanqureshi@stitchpay.app"
+            placeholder="e.g. thearmanqureshi@gmail.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
