@@ -144,7 +144,7 @@ export default function LoginPage() {
           <span>or</span>
         </div>
 
-        <button className="btn-reset" type="button">
+        <button className="btn-reset" type="button" onClick={() => router.push("/forgot-password")}>
           Reset Password
         </button>
 

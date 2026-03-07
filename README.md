@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+StitchPay — Product Overview
 
-## Getting Started
+StitchPay is a digital platform that enables garment businesses to track work, calculate wages, and manage payouts for workers in a single system.
 
-First, run the development server:
+Instead of using spreadsheets, notebooks, or manual payroll calculations, StitchPay provides a structured workflow for managing workers and their earnings based on production data.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Core Problem It Solves
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Garment workshops often face operational challenges such as:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Tracking how many pieces each worker produces
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Calculating piece-rate wages
 
-## Learn More
+Managing monthly payroll
 
-To learn more about Next.js, take a look at the following resources:
+Avoiding calculation errors
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Maintaining transparent records
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Handling multiple workers and product styles
 
-## Deploy on Vercel
+These processes are frequently managed through manual registers or spreadsheets, which leads to:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Payroll mistakes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Lack of accountability
+
+Time-consuming calculations
+
+Difficulty tracking historical data
+
+StitchPay addresses these issues by automating the entire workflow from work logging to payroll generation.
