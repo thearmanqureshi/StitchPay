@@ -101,7 +101,7 @@ export default function LoginPage() {
       <button
         className="btn-reset"
         type="button"
-        onClick={() => router.push("/forgot-password")}
+        onClick={() => router.push("/reset-password")}
       >
         Reset Password
       </button>
