@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
-import AuthLayout from "@/components/auth-layout";
+import AuthLayout from "@/components/login/auth-layout";
 
 export default function UpdatePasswordPage() {
   const [password, setPassword] = useState("");

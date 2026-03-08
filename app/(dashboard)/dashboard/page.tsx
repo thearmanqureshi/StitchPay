@@ -16,16 +16,6 @@ export default function DashboardPage() {
       <h1>StitchPay Dashboard</h1>
       <p>Workforce payroll control center.</p>
 
-      <button
-        onClick={handleLogout}
-        style={{
-          marginTop: "20px",
-          padding: "10px 16px",
-          cursor: "pointer",
-        }}
-      >
-        Logout
-      </button>
     </div>
   );
 }

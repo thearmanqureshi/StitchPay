@@ -1,5 +1,5 @@
 import { DM_Sans, DM_Serif_Display } from "next/font/google";
-import "./globals.css";
+import "./auth.css";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
