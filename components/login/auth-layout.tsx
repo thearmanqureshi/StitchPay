@@ -10,7 +10,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         <div className="grid-lines"></div>
 
         <div className="logo">
-          <Image src="/Logo.jpeg" alt="StitchPay" width={140} height={40} priority />
+          <Image src="/Logo.jpeg" alt="StitchPay" width={170} height={50} priority />
         </div>
 
         <div className="hero-copy">

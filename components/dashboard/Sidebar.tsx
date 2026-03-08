@@ -24,7 +24,7 @@ export default function Sidebar() {
     <aside className="sidebar">
       {/* Logo */}
       <div className="sidebar-logo">
-        <Image src="/Logo.jpeg" alt="StitchPay" width={140} height={40} priority />
+        <Image src="/Logo.jpeg" alt="StitchPay" width={170} height={50} priority />
       </div>
 
       {/* Navigation */}
