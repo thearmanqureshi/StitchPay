@@ -153,7 +153,7 @@ export default function Sidebar() {
       </nav>
 
       {/* Bottom User */}
-      <div className="sidebar-user">
+      <div className="sidebar-footer">
         <div className="user-wrapper">
           {menuOpen && (
             <div className="user-popup">
