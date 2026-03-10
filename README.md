@@ -1,33 +1,79 @@
-StitchPay — Product Overview
+# StitchPay 🧵💰
 
-StitchPay is a digital platform that enables garment businesses to track work, calculate wages, and manage payouts for workers in a single system.
+**StitchPay** is a payroll and production management platform designed for small and mid-scale garment manufacturing units. It helps organizations track worker production, calculate wages, and manage payroll efficiently from a single dashboard.
 
-Instead of using spreadsheets, notebooks, or manual payroll calculations, StitchPay provides a structured workflow for managing workers and their earnings based on production data.
+The system replaces manual record-keeping with a structured digital workflow tailored for tailoring and garment stitching businesses.
 
-Core Problem It Solves
+---
 
-Garment workshops often face operational challenges such as:
+# ✨ Features
 
-Tracking how many pieces each worker produces
+## Dashboard
+- Overview of payroll and production data
+- Central navigation for all modules
 
-Calculating piece-rate wages
+## Worker Management
+- Add and manage workers
+- Maintain worker profiles and records
 
-Managing monthly payroll
+## Styles Management
+- Register garment styles
+- Associate style numbers with production entries
 
-Avoiding calculation errors
+## Production Entries
+- Record pieces completed by workers
+- Track production data per style and worker
 
-Maintaining transparent records
+## Payroll Calculation
+- Automatically calculate wages based on production
+- Generate structured payroll data
 
-Handling multiple workers and product styles
+## Monthly Wages
+- Consolidated wage tracking
+- Payroll history and records
 
-These processes are frequently managed through manual registers or spreadsheets, which leads to:
+## Authentication
+- Secure login and session management
 
-Payroll mistakes
+---
 
-Lack of accountability
+# 🏗 Tech Stack
 
-Time-consuming calculations
+## Frontend
+- Next.js (App Router)
+- React
+- TypeScript
+- CSS
 
-Difficulty tracking historical data
+## Backend / Database
+- Supabase
+- PostgreSQL
 
-StitchPay addresses these issues by automating the entire workflow from work logging to payroll generation.
+## Authentication
+- Supabase Auth
+
+## Deployment
+- Vercel
+
+---
+
+# 📂 Project Structure
+
+---
+
+# 📈 Future Improvements
+
+
+
+---
+
+# 📌 Project Status
+
+Currently under active development.
+
+Core modules implemented:
+- Authentication
+- Dashboard UI
+
+Upcoming modules:
+- Styles
