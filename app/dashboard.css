@@ -141,7 +141,7 @@ body {
 
 .sidebar-footer {
   margin-top: auto;
-  padding: 16px 12px;
+  padding: 14px 10px;
   border-top: 1px solid var(--border2);
 }
 
@@ -172,6 +172,8 @@ body {
 .avatar {
   width: 30px;
   height: 30px;
+  min-width: 30px;
+  flex-shrink: 0;
   border-radius: 50%;
   background: var(--accent);
   display: flex;
