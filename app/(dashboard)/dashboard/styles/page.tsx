@@ -9,16 +9,15 @@ export default function DashboardPage() {
   return (
     <>
       <Header
-        title="Dashboard"
-        section="Overview"
-        action={{
-          label: "Quick Add",
-          onClick: () => router.push("/dashboard/styles/new"),
-        }}
+        title="Styles"
+        section="Management"
+        subSection="Styles"
+        exportAction={{ label: "Export", onClick: () => {} }}
+        action={{ label: "Add Style", onClick: () => {} }}
       />
 
       <div className="page-content">
-
+        
       </div>
     </>
   );

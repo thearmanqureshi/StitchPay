@@ -233,6 +233,12 @@ body {
 /* ══════════════════════════════
    MAIN AREA
 ══════════════════════════════ */
+.dashboard-wrapper {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
 
 .main {
   margin-left: var(--sidebar-w);
