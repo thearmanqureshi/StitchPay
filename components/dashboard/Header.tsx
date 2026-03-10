@@ -28,7 +28,10 @@ export default function Header({
 
   return (
     <div className="topbar">
-      <div>
+      {/* Spacer matching hamburger button width on mobile */}
+      <div className="topbar-hamburger-slot" />
+
+      <div className="topbar-left">
         <div className="topbar-title">{title}</div>
         <div className="topbar-breadcrumb">
           <span>StitchPay</span> › {section}
@@ -69,7 +72,7 @@ export default function Header({
               <polyline points="7 10 12 15 17 10" />
               <line x1="12" y1="15" x2="12" y2="3" />
             </svg>
-            {exportAction.label}
+            <span className="btn-label">{exportAction.label}</span>
           </button>
         )}
 
@@ -86,7 +89,7 @@ export default function Header({
               <line x1="12" y1="5" x2="12" y2="19" />
               <line x1="5" y1="12" x2="19" y2="12" />
             </svg>
-            {action.label}
+            <span className="btn-label">{action.label}</span>
           </button>
         )}
       </div>
