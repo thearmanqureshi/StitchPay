@@ -28,7 +28,6 @@ export default function Header({
 
   return (
     <div className="topbar">
-      {/* Spacer matching hamburger button width on mobile */}
       <div className="topbar-hamburger-slot" />
 
       <div className="topbar-left">

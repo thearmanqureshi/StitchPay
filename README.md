@@ -64,9 +64,13 @@ Currently under active development.
 Core modules implemented:
 - Authentication
 - Dashboard UI
+- Styles
+- Workers
 
 Upcoming modules:
-- Styles
+- Production Entries
+- Payroll Calculation
+- Monthly Wages
 
 ---
 

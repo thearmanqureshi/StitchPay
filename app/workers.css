@@ -1,0 +1,61 @@
+/* WORKER CELL */
+
+.worker-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.worker-avatar {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  border-radius: 50%;
+  background: var(--accent-dim);
+  border: 1px solid rgba(200, 240, 96, 0.2);
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.worker-info {
+  min-width: 0;
+}
+
+.worker-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.worker-email {
+  font-size: 0.72rem;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.worker-phone {
+  font-variant-numeric: tabular-nums;
+  color: var(--muted2);
+  white-space: nowrap;
+}
+
+/* ON LEAVE BADGE */
+
+.badge-leave {
+  background: rgba(251, 191, 36, 0.1);
+  color: #fbbf24;
+}
+
+.badge-leave .badge-dot {
+  background: #fbbf24;
+}

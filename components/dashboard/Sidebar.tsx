@@ -47,7 +47,6 @@ export default function Sidebar() {
     fetchUser();
   }, []);
 
-  // Close drawer on route change
   useEffect(() => {
     setDrawerOpen(false);
     setMenuOpen(false);
@@ -192,7 +191,6 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Desktop Sidebar */}
       <aside className="sidebar desktop-sidebar">
         <div className="sidebar-logo">
           <Image
@@ -206,12 +204,10 @@ export default function Sidebar() {
         {navContent}
       </aside>
 
-      {/* Mobile: backdrop overlay — clicking closes drawer */}
       {drawerOpen && (
         <div className="drawer-overlay" onClick={() => setDrawerOpen(false)} />
       )}
 
-      {/* Mobile: slide-in drawer — no close button, overlay handles it */}
       <aside
         className={`sidebar mobile-drawer ${drawerOpen ? "drawer-open" : ""}`}
       >
@@ -227,7 +223,6 @@ export default function Sidebar() {
         {navContent}
       </aside>
 
-      {/* Mobile: hamburger trigger */}
       <button
         className="hamburger"
         onClick={() => setDrawerOpen(true)}
