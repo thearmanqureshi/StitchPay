@@ -1,4 +1,4 @@
-# StitchPay 🧵💰
+# StitchPay     
 
 **StitchPay** is a payroll and production management platform designed for small and mid-scale garment manufacturing units. It helps organizations track worker production, calculate wages, and manage payroll efficiently from a single dashboard.
 
@@ -6,19 +6,22 @@ The system replaces manual record-keeping with a structured digital workflow tai
 
 ---
 
-# ✨ Features
+# Features
+
+## Authentication
+- Secure login and session management
 
 ## Dashboard
 - Overview of payroll and production data
 - Central navigation for all modules
 
-## Worker Management
-- Add and manage workers
-- Maintain worker profiles and records
-
 ## Styles Management
 - Register garment styles
 - Associate style numbers with production entries
+
+## Worker Management
+- Add and manage workers
+- Maintain worker profiles and records
 
 ## Production Entries
 - Record pieces completed by workers
@@ -32,12 +35,9 @@ The system replaces manual record-keeping with a structured digital workflow tai
 - Consolidated wage tracking
 - Payroll history and records
 
-## Authentication
-- Secure login and session management
-
 ---
 
-# 🏗 Tech Stack
+# Tech Stack
 
 ## Frontend
 - Next.js (App Router)
@@ -53,17 +53,7 @@ The system replaces manual record-keeping with a structured digital workflow tai
 - Supabase Auth
 
 ## Deployment
-- Vercel
-
----
-
-# 📂 Project Structure
-
----
-
-# 📈 Future Improvements
-
-
+- Vercel -> https://stitchpay.vercel.app
 
 ---
 
@@ -77,3 +67,13 @@ Core modules implemented:
 
 Upcoming modules:
 - Styles
+
+---
+
+# Project Structure
+
+---
+
+# Future Improvements
+
+---
