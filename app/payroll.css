@@ -1,0 +1,185 @@
+/* CYCLE SELECTOR */
+
+.cycle-selector {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.cycle-select {
+  min-width: 260px;
+}
+
+.last-calculated {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+/* SUMMARY CARD */
+
+.payroll-summary {
+  background: linear-gradient(135deg, #0f1a0a 0%, #131a0d 50%, #0b0d11 100%);
+  border: 1px solid rgba(200, 240, 96, 0.15);
+  border-radius: 12px;
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.payroll-summary-left {
+  flex: 1;
+  min-width: 0;
+}
+
+.summary-period {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.summary-total {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.summary-sub {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.payroll-summary-right {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex-shrink: 0;
+}
+
+.summary-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.summary-stat-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.summary-stat-accent {
+  color: #4ade80;
+}
+
+.summary-stat-muted {
+  color: #f87171;
+}
+
+.summary-stat-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* PAYROLL TABLE */
+
+.payroll-styles-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.payroll-style-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.payroll-style-name {
+  font-size: 0.82rem;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.payroll-style-detail {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.payroll-pieces-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.payroll-piece-row {
+  font-size: 0.85rem;
+  color: var(--accent);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.6;
+}
+
+.payroll-no-entries {
+  color: var(--muted);
+}
+
+/* ══════════════════════════════
+   RESPONSIVE
+══════════════════════════════ */
+
+@media (max-width: 1024px) {
+  .summary-total {
+    font-size: 1.9rem;
+  }
+
+  .payroll-summary-right {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .payroll-summary {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 18px 20px;
+  }
+
+  .summary-total {
+    font-size: 1.7rem;
+  }
+
+  .payroll-summary-right {
+    width: 100%;
+    justify-content: space-between;
+    gap: 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .cycle-select {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .payroll-style-detail {
+    display: none;
+  }
+}

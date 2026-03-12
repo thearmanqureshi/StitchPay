@@ -53,7 +53,7 @@ export default function WorkersPage() {
 
     const { data, error } = await supabase
       .from("production_entries")
-      .select("worker_id, pieces_produced")
+      .select("worker_id, qty_completed")  // ← fixed: was pieces_produced
       .in("worker_id", workerIds)
       .gte("entry_date", startOfMonth)
       .lte("entry_date", endOfMonth);
@@ -61,7 +61,7 @@ export default function WorkersPage() {
     if (!error && data) {
       const output: Record<string, number> = {};
       data.forEach((entry) => {
-        output[entry.worker_id] = (output[entry.worker_id] ?? 0) + entry.pieces_produced;
+        output[entry.worker_id] = (output[entry.worker_id] ?? 0) + entry.qty_completed; // ← fixed
       });
       setMonthlyOutput(output);
     }
@@ -128,7 +128,6 @@ export default function WorkersPage() {
       />
 
       <div className="page-content">
-        {/* Toolbar */}
         <div className="styles-toolbar">
           <div className="search-box">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -163,7 +162,6 @@ export default function WorkersPage() {
           </div>
         </div>
 
-        {/* Table Card */}
         <div className="table-card">
           <div className="table-card-header">
             <div>

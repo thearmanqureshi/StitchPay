@@ -66,11 +66,12 @@ Core modules implemented:
 - Dashboard UI
 - Styles
 - Workers
-
-Upcoming modules:
 - Production Entries
 - Payroll Calculation
+
+Upcoming modules:
 - Monthly Wages
+- Dashboard
 
 ---
 
