@@ -173,7 +173,6 @@
 }
 
 .style-no {
-  color: var(--muted) !important;
   font-size: 0.78rem !important;
   font-variant-numeric: tabular-nums;
 }
@@ -255,6 +254,11 @@
 
 .badge-inactive .badge-dot {
   background: #f87171;
+}
+
+.badge-dept-prod .badge-dot,
+.badge-dept-fin .badge-dot {
+  display: none;
 }
 
 /* ACTION BUTTON */
@@ -419,6 +423,116 @@
   padding: 16px 24px 20px;
   border-top: 1px solid var(--border);
 }
+
+/* ══════════════════════════════
+   STYLE MODAL — RATE SECTION
+══════════════════════════════ */
+
+.modal-lg {
+  max-width: 560px;
+  width: 100%;
+}
+
+.rate-section {
+  margin-top: 20px;
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 16px;
+  background: var(--surface2);
+}
+
+.rate-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.rate-section-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted2);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.rate-tabs {
+  display: flex;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 3px;
+  gap: 2px;
+}
+
+.rate-tab {
+  padding: 5px 14px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.rate-tab.active {
+  background: var(--surface2);
+  color: var(--text);
+  border: 1px solid var(--border2);
+}
+
+.rate-tab:hover:not(.active) {
+  color: var(--text);
+}
+
+.vendor-rate-group {
+  margin-bottom: 14px;
+}
+
+.rate-hint {
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.role-rates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.rate-preview {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rate-preview-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--muted2);
+}
+
+.rate-preview-margin {
+  border-top: 1px solid var(--border);
+  padding-top: 6px;
+  margin-top: 2px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.margin-positive { color: #4ade80; }
+.margin-negative { color: #f87171; }
 
 /* ══════════════════════════════
    RESPONSIVE

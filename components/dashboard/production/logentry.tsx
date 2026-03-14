@@ -12,14 +12,22 @@ interface ProductionEntry {
   rate_per_piece: number;
   amount_earned: number;
   entry_date: string;
+  role: string;
+  department: string;
   worker: { name: string };
   style: { style_name: string };
 }
 
 interface Props {
   entry: ProductionEntry | null;
-  workers: { id: string; name: string; worker_id: string }[];
-  styles: { id: string; style_name: string; rate_per_piece: number }[];
+  workers: {
+    id: string;
+    name: string;
+    worker_id: string;
+    role: string;
+    department: string;
+  }[];
+  styles: { id: string; style_name: string; style_no: string }[];
   onClose: () => void;
   onSaved: () => void;
 }
@@ -38,7 +46,8 @@ export default function LogEntryModal({
     style_id: styles[0]?.id ?? "",
     qty_completed: "",
   });
-  const [rate, setRate] = useState(0);
+  const [rate, setRate] = useState<number | null>(null);
+  const [rateLoading, setRateLoading] = useState(false);
   const [amountEarned, setAmountEarned] = useState(0);
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -58,16 +67,34 @@ export default function LogEntryModal({
   }, [entry]);
 
   useEffect(() => {
-    if (!isEdit) {
-      const selectedStyle = styles.find((s) => s.id === form.style_id);
-      const newRate = selectedStyle?.rate_per_piece ?? 0;
-      setRate(newRate);
-      setAmountEarned(newRate * (parseInt(form.qty_completed) || 0));
-    }
-  }, [form.style_id]);
+    if (isEdit) return;
+
+    const worker = workers.find((w) => w.id === form.worker_id);
+    const styleId = form.style_id;
+
+    if (!worker || !styleId) return;
+
+    setRateLoading(true);
+    setRate(null);
+
+    supabase
+      .from("style_role_rates")
+      .select("worker_rate")
+      .eq("style_id", styleId)
+      .eq("role", worker.role)
+      .single()
+      .then(({ data }) => {
+        const fetchedRate = data?.worker_rate ?? 0;
+        setRate(fetchedRate);
+        setAmountEarned(fetchedRate * (parseInt(form.qty_completed) || 0));
+        setRateLoading(false);
+      });
+  }, [form.worker_id, form.style_id]);
 
   useEffect(() => {
-    setAmountEarned(rate * (parseInt(form.qty_completed) || 0));
+    if (rate !== null) {
+      setAmountEarned(rate * (parseInt(form.qty_completed) || 0));
+    }
   }, [form.qty_completed, rate]);
 
   const handleChange = (
@@ -116,6 +143,13 @@ export default function LogEntryModal({
       return;
     }
 
+    if (!isEdit && (rate === null || rate === 0)) {
+      setError(
+        "No rate found for this worker's role and style. Please set it in the Styles module first.",
+      );
+      return;
+    }
+
     setSaving(true);
 
     const {
@@ -128,21 +162,16 @@ export default function LogEntryModal({
     }
 
     if (isEdit) {
-      const payload = {
-        qty_completed: qty,
-      };
-
       const { error: dbError } = await supabase
         .from("production_entries")
-        .update(payload)
+        .update({ qty_completed: qty })
         .eq("id", entry!.id);
 
       setSaving(false);
       if (dbError) setError(dbError.message);
       else onSaved();
     } else {
-      const selectedStyle = styles.find((s) => s.id === form.style_id);
-      const snapshotRate = selectedStyle?.rate_per_piece ?? 0;
+      const worker = workers.find((w) => w.id === form.worker_id)!;
       const entryId = await generateEntryId(user.id);
 
       const payload = {
@@ -151,7 +180,9 @@ export default function LogEntryModal({
         worker_id: form.worker_id,
         style_id: form.style_id,
         qty_completed: qty,
-        rate_per_piece: snapshotRate,
+        rate_per_piece: rate!,
+        role: worker.role,
+        department: worker.department,
         entry_date: new Date().toISOString(),
       };
 
@@ -164,6 +195,8 @@ export default function LogEntryModal({
       else onSaved();
     }
   };
+
+  const selectedWorker = workers.find((w) => w.id === form.worker_id);
 
   return (
     <div className="modal-backdrop" onClick={onClose}>
@@ -222,12 +255,26 @@ export default function LogEntryModal({
               >
                 {styles.map((s) => (
                   <option key={s.id} value={s.id}>
-                    {s.style_name}
+                    {s.style_name} ({s.style_no})
                   </option>
                 ))}
               </select>
             </div>
           </div>
+
+          {!isEdit && selectedWorker && (
+            <div className="entry-worker-context">
+              <span className="context-pill">{selectedWorker.department}</span>
+              <span className="context-pill">{selectedWorker.role}</span>
+              <span className="context-rate">
+                {rateLoading
+                  ? "Looking up rate..."
+                  : rate !== null && rate > 0
+                    ? `₹${rate} / piece`
+                    : "No rate set for this combination"}
+              </span>
+            </div>
+          )}
 
           <div className="form-row">
             <div className="form-group">
@@ -245,7 +292,13 @@ export default function LogEntryModal({
             </div>
             <div className="form-group">
               <label>Rate / Piece</label>
-              <input value={`₹${rate}`} readOnly className="input-readonly" />
+              <input
+                value={
+                  rateLoading ? "Loading..." : rate !== null ? `₹${rate}` : "—"
+                }
+                readOnly
+                className="input-readonly"
+              />
             </div>
           </div>
 
@@ -276,7 +329,6 @@ export default function LogEntryModal({
         </div>
 
         <div className="modal-footer">
-          {/* Delete button — only in edit mode */}
           {isEdit && (
             <button
               className={`btn-sm ${confirmDelete ? "btn-danger-confirm" : "btn-danger"}`}
@@ -291,7 +343,6 @@ export default function LogEntryModal({
             </button>
           )}
 
-          {/* Cancel confirm delete if user changes mind */}
           {confirmDelete && (
             <button
               className="btn-sm ghost"
@@ -309,7 +360,7 @@ export default function LogEntryModal({
               <button
                 className="btn-sm primary"
                 onClick={handleSubmit}
-                disabled={saving}
+                disabled={saving || rateLoading}
               >
                 {saving ? "Saving..." : isEdit ? "Save Changes" : "Log Entry"}
               </button>

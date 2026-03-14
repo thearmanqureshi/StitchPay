@@ -14,6 +14,7 @@ interface Worker {
 
 interface StyleBreakdown {
   style_name: string;
+  style_no: string;
   qty: number;
   rate: number;
   amount: number;
@@ -84,15 +85,14 @@ function generateCycles(count: number): Cycle[] {
         cycleStart.getMonth(),
         10,
       );
-      cycleEnd = prevEnd;
     } else {
       cycleStart = new Date(
         cycleStart.getFullYear(),
         cycleStart.getMonth() - 1,
         25,
       );
-      cycleEnd = prevEnd;
     }
+    cycleEnd = prevEnd;
   }
 
   return cycles;
@@ -133,7 +133,7 @@ export default function PayrollPage() {
     const { data: entries } = await supabase
       .from("production_entries")
       .select(
-        "worker_id, style_id, qty_completed, rate_per_piece, amount_earned, styles(style_name)",
+        "worker_id, style_id, qty_completed, rate_per_piece, amount_earned, styles(style_name, style_no)",
       )
       .eq("user_id", user.id)
       .gte("entry_date", selectedCycle.start.toISOString())
@@ -143,6 +143,7 @@ export default function PayrollPage() {
     (entries ?? []).forEach((e: any) => {
       if (!workerMap[e.worker_id]) workerMap[e.worker_id] = [];
       const styleName = e.styles?.style_name ?? "Unknown";
+      const styleNo = e.styles?.style_no ?? "—";
       const existing = workerMap[e.worker_id].find(
         (s) => s.style_name === styleName && s.rate === e.rate_per_piece,
       );
@@ -152,6 +153,7 @@ export default function PayrollPage() {
       } else {
         workerMap[e.worker_id].push({
           style_name: styleName,
+          style_no: styleNo,
           qty: e.qty_completed,
           rate: e.rate_per_piece,
           amount: e.amount_earned,
@@ -187,9 +189,10 @@ export default function PayrollPage() {
         "Worker ID",
         "Worker Name",
         "Style",
+        "Style ID",
         "Qty",
         "Rate",
-        "Amount",
+        "Calculation",
         "Total Pieces",
         "Gross Wage",
         "Status",
@@ -201,9 +204,10 @@ export default function PayrollPage() {
           wp.worker.worker_id,
           wp.worker.name,
           "—",
+          "—",
           "0",
           "0",
-          "0",
+          "—",
           "0",
           "0",
           "No Data",
@@ -214,9 +218,10 @@ export default function PayrollPage() {
             i === 0 ? wp.worker.worker_id : "",
             i === 0 ? wp.worker.name : "",
             s.style_name,
+            s.style_no,
             String(s.qty),
             String(s.rate),
-            String(s.amount),
+            `${s.qty} × ₹${s.rate} = ₹${s.amount}`,
             i === 0 ? String(wp.totalPieces) : "",
             i === 0 ? String(wp.grossWage) : "",
             i === 0 ? wp.status : "",
@@ -367,7 +372,7 @@ export default function PayrollPage() {
           {cycleSelect}
           {lastCalculated && (
             <p className="last-calculated">
-              Last calculated ·{" "}
+              Last calculated{"\n"}
               {lastCalculated.toLocaleTimeString("en-IN", {
                 hour: "2-digit",
                 minute: "2-digit",
@@ -390,8 +395,10 @@ export default function PayrollPage() {
               <thead>
                 <tr>
                   <th>Worker</th>
-                  <th>Styles Worked</th>
+                  <th>Style Worked</th>
+                  <th>Style ID</th>
                   <th>Total Pieces</th>
+                  <th>Calculation</th>
                   <th>Gross Wage</th>
                   <th>Status</th>
                 </tr>
@@ -399,7 +406,7 @@ export default function PayrollPage() {
               <tbody>
                 {loading ? (
                   <tr>
-                    <td colSpan={5} className="table-empty">
+                    <td colSpan={7} className="table-empty">
                       <div className="table-loading">
                         <div className="spinner" />
                         Calculating payroll...
@@ -408,13 +415,14 @@ export default function PayrollPage() {
                   </tr>
                 ) : filteredData.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="table-empty">
+                    <td colSpan={7} className="table-empty">
                       No workers found
                     </td>
                   </tr>
                 ) : (
                   filteredData.map((wp) => (
                     <tr key={wp.worker.id}>
+                      {/* Worker */}
                       <td>
                         <div className="worker-cell">
                           <div className="worker-avatar">
@@ -428,6 +436,8 @@ export default function PayrollPage() {
                           </div>
                         </div>
                       </td>
+
+                      {/* Style Worked */}
                       <td>
                         {wp.styles.length === 0 ? (
                           <span className="payroll-no-entries">—</span>
@@ -438,14 +448,31 @@ export default function PayrollPage() {
                                 <span className="payroll-style-name">
                                   {s.style_name}
                                 </span>
-                                <span className="payroll-style-detail">
-                                  {s.qty} pcs × ₹{s.rate}
-                                </span>
                               </div>
                             ))}
                           </div>
                         )}
                       </td>
+
+                      {/* Style ID */}
+                      <td>
+                        {wp.styles.length === 0 ? (
+                          "—"
+                        ) : (
+                          <div className="payroll-styles-list">
+                            {wp.styles.map((s, i) => (
+                              <div
+                                key={i}
+                                className="payroll-piece-row style-no"
+                              >
+                                {s.style_no}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </td>
+
+                      {/* Total Pieces */}
                       <td className="pe-qty">
                         {wp.totalPieces > 0 ? (
                           <div className="payroll-pieces-list">
@@ -459,9 +486,29 @@ export default function PayrollPage() {
                           "0"
                         )}
                       </td>
+
+                      {/* Calculation */}
+                      <td>
+                        {wp.styles.length === 0 ? (
+                          "—"
+                        ) : (
+                          <div className="payroll-styles-list">
+                            {wp.styles.map((s, i) => (
+                              <div key={i} className="payroll-style-detail">
+                                {s.qty} × ₹{s.rate} = ₹
+                                {s.amount.toLocaleString("en-IN")}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </td>
+
+                      {/* Gross Wage */}
                       <td className="pe-amount">
                         ₹{wp.grossWage.toLocaleString("en-IN")}
                       </td>
+
+                      {/* Status */}
                       <td>
                         <span
                           className={`badge ${wp.status === "Ready" ? "badge-active" : "badge-inactive"}`}

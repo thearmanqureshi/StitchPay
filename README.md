@@ -68,9 +68,9 @@ Core modules implemented:
 - Workers
 - Production Entries
 - Payroll Calculation
+- Monthly Wages
 
 Upcoming modules:
-- Monthly Wages
 - Dashboard
 
 ---

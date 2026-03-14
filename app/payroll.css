@@ -20,8 +20,8 @@
 /* SUMMARY CARD */
 
 .payroll-summary {
-  background: linear-gradient(135deg, #0f1a0a 0%, #131a0d 50%, #0b0d11 100%);
-  border: 1px solid rgba(200, 240, 96, 0.15);
+  background: linear-gradient(135deg, rgba(200,240,96,0.12) 0%, rgba(200,240,96,0.03) 100%);
+  border: 1px solid rgba(200,240,96,0.2);
   border-radius: 12px;
   padding: 24px 28px;
   display: flex;
@@ -41,7 +41,7 @@
   font-weight: 600;
   letter-spacing: 0.1em;
   color: var(--muted);
-  margin-bottom: 6px;
+  margin-bottom: 12px;
 }
 
 .summary-total {
@@ -139,6 +139,11 @@
 
 .payroll-no-entries {
   color: var(--muted);
+}
+
+.payroll-piece-row.style-no {
+  color: var(--text);
+  font-weight: 400;
 }
 
 /* ══════════════════════════════

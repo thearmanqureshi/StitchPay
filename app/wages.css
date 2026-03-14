@@ -1,0 +1,94 @@
+/* ══════════════════════════════
+   MONTHLY WAGES MODULE
+   Extends styles.css & payroll.css
+══════════════════════════════ */
+
+/* PENDING BADGE */
+.badge-wages-pending {
+  background: rgba(251, 191, 36, 0.1);
+  color: #fbbf24;
+  border: 1px solid rgba(251, 191, 36, 0.2);
+}
+
+.badge-wages-pending .badge-dot {
+  background: #fbbf24;
+}
+
+/* EXPENSE COLUMN */
+.wages-expense-val {
+  color: #f87171;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.wages-expense-empty {
+  color: var(--muted);
+}
+
+.wages-net {
+  font-weight: 700;
+}
+
+/* ACTIONS */
+.wages-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.wages-btn-expense {
+  font-size: 0.75rem;
+  padding: 5px 10px;
+  white-space: nowrap;
+}
+
+.wages-btn-pay {
+  font-size: 0.75rem;
+  padding: 5px 12px;
+  white-space: nowrap;
+}
+
+/* EXPENSE HINT */
+.wages-expense-hint {
+  font-size: 0.73rem;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+/* RECEIPT MODAL */
+.modal-receipt {
+  max-width: 560px;
+  width: 100%;
+}
+
+.modal-header-sub {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.receipt-body {
+  padding: 0 !important;
+  overflow: hidden;
+  border-radius: 0 0 8px 8px;
+}
+
+.receipt-iframe {
+  width: 100%;
+  height: 480px;
+  border: none;
+  display: block;
+}
+
+/* RESPONSIVE */
+@media (max-width: 767px) {
+  .wages-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .receipt-iframe {
+    height: 360px;
+  }
+}

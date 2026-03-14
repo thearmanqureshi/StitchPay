@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import Header from "@/components/dashboard/Header";
 import { supabase } from "@/lib/supabase/client";
 import AddStyleModal from "@/components/dashboard/styles/addstyles";
@@ -12,9 +11,10 @@ interface Style {
   style_no: string;
   style_name: string;
   category: string;
-  rate_per_piece: number;
   company: string;
   status: "Active" | "Inactive";
+  production_rate?: number;
+  finishing_rate?: number;
 }
 
 const CATEGORIES = [
@@ -27,7 +27,6 @@ const CATEGORIES = [
 ];
 
 export default function StylesPage() {
-  const router = useRouter();
   const [styles, setStyles] = useState<Style[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -37,12 +36,39 @@ export default function StylesPage() {
 
   const fetchStyles = async () => {
     setLoading(true);
-    const { data, error } = await supabase
+
+    const { data: stylesData, error } = await supabase
       .from("styles")
       .select("*")
       .order("style_no", { ascending: true });
 
-    if (!error && data) setStyles(data);
+    if (error || !stylesData) {
+      setLoading(false);
+      return;
+    }
+
+    // Fetch all vendor rates for these styles
+    const styleIds = stylesData.map((s) => s.id);
+    const { data: ratesData } = await supabase
+      .from("style_department_rates")
+      .select("style_id, department, vendor_rate")
+      .in("style_id", styleIds);
+
+    // Merge rates into styles
+    const rateMap: Record<
+      string,
+      { production_rate?: number; finishing_rate?: number }
+    > = {};
+    (ratesData ?? []).forEach((r) => {
+      if (!rateMap[r.style_id]) rateMap[r.style_id] = {};
+      if (r.department === "Production")
+        rateMap[r.style_id].production_rate = r.vendor_rate;
+      if (r.department === "Finishing")
+        rateMap[r.style_id].finishing_rate = r.vendor_rate;
+    });
+
+    const merged = stylesData.map((s) => ({ ...s, ...rateMap[s.id] }));
+    setStyles(merged);
     setLoading(false);
   };
 
@@ -56,7 +82,8 @@ export default function StylesPage() {
         "Style No",
         "Style Name",
         "Category",
-        "Rate / Piece",
+        "Production Rate",
+        "Finishing Rate",
         "Company",
         "Status",
       ],
@@ -64,7 +91,8 @@ export default function StylesPage() {
         s.style_no,
         s.style_name,
         s.category,
-        s.rate_per_piece,
+        s.production_rate ?? "—",
+        s.finishing_rate ?? "—",
         s.company,
         s.status,
       ]),
@@ -89,10 +117,8 @@ export default function StylesPage() {
     return matchSearch && matchCategory;
   });
 
-  const statusClass = (status: string) => {
-    if (status === "Active") return "badge badge-active";
-    return "badge badge-inactive";
-  };
+  const statusClass = (status: string) =>
+    status === "Active" ? "badge badge-active" : "badge badge-inactive";
 
   return (
     <>
@@ -111,7 +137,6 @@ export default function StylesPage() {
       />
 
       <div className="page-content">
-        {/* Filters */}
         <div className="styles-toolbar">
           <div className="search-box">
             <svg
@@ -175,7 +200,6 @@ export default function StylesPage() {
           </div>
         </div>
 
-        {/* Table Card */}
         <div className="table-card">
           <div className="table-card-header">
             <div>
@@ -195,7 +219,8 @@ export default function StylesPage() {
                   <th>Style No.</th>
                   <th>Style Name</th>
                   <th>Category</th>
-                  <th>Rate / Piece</th>
+                  <th>Production Rate</th>
+                  <th>Finishing Rate</th>
                   <th>Company</th>
                   <th>Status</th>
                   <th>Actions</th>
@@ -204,7 +229,7 @@ export default function StylesPage() {
               <tbody>
                 {loading ? (
                   <tr>
-                    <td colSpan={7} className="table-empty">
+                    <td colSpan={8} className="table-empty">
                       <div className="table-loading">
                         <div className="spinner" />
                         Loading styles...
@@ -213,7 +238,7 @@ export default function StylesPage() {
                   </tr>
                 ) : filteredStyles.length === 0 ? (
                   <tr>
-                    <td colSpan={7} className="table-empty">
+                    <td colSpan={8} className="table-empty">
                       No styles found
                     </td>
                   </tr>
@@ -223,7 +248,20 @@ export default function StylesPage() {
                       <td className="style-no">{style.style_no}</td>
                       <td className="style-name">{style.style_name}</td>
                       <td>{style.category}</td>
-                      <td className="style-rate">₹{style.rate_per_piece}</td>
+                      <td className="style-rate">
+                        {style.production_rate != null ? (
+                          `₹${style.production_rate}`
+                        ) : (
+                          <span className="text-muted">—</span>
+                        )}
+                      </td>
+                      <td className="style-rate">
+                        {style.finishing_rate != null ? (
+                          `₹${style.finishing_rate}`
+                        ) : (
+                          <span className="text-muted">—</span>
+                        )}
+                      </td>
                       <td>{style.company}</td>
                       <td>
                         <span className={statusClass(style.status)}>
