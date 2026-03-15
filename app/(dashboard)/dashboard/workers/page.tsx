@@ -4,8 +4,7 @@ import { useState, useEffect } from "react";
 import Header from "@/components/dashboard/Header";
 import { supabase } from "@/lib/supabase/client";
 import AddWorkerModal from "@/components/dashboard/workers/addworkers";
-import "@/app/styles.css";
-import "@/app/workers.css";
+import "@/app/dashboard.css";
 
 interface Worker {
   id: string;

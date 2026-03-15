@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Header from "@/components/dashboard/Header";
 import { supabase } from "@/lib/supabase/client";
 import AddStyleModal from "@/components/dashboard/styles/addstyles";
-import "@/app/styles.css";
+import "@/app/dashboard.css";
 
 interface Style {
   id: string;

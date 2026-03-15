@@ -1,3 +1,54 @@
+/* ══════════════════════════════════════════════════════════════════════
+   DASHBOARD.CSS — Merged stylesheet
+   Used in: Dashboard · Styles Module · Workers Module ·
+            Production Module · Wages Module · Payroll Modules
+   ══════════════════════════════════════════════════════════════════════
+
+   TABLE OF CONTENTS
+   ─────────────────
+   1.  Reset & Custom Properties
+   2.  Base / Body
+   3.  Layout — Dashboard Wrapper
+   4.  Sidebar
+       4a. Sidebar Navigation
+       4b. Sidebar Footer & User Chip
+       4c. User Popup
+   5.  Mobile Drawer & Hamburger
+   6.  Main Area
+   7.  Topbar / Header
+       7a. Month Badge
+       7b. Buttons
+   8.  Page Content
+   9.  Quick-Add Dropdown
+   10. Dashboard — Stat Cards
+   11. Dashboard — Mid Grid & Chart
+   12. Dashboard — Top Performers
+   13. Styles Module — Toolbar & Search
+   14. Table Card & Styles Table
+   15. Badges
+   16. Action Button
+   17. Modal
+       17a. Modal — Rate Section (Style Modal)
+   18. Payroll Module
+       18a. Cycle Selector
+       18b. Summary Card
+       18c. Payroll Table
+   19. Production Module
+   20. Wages Module
+   21. Workers Module
+   22. Shared Utilities (Spinner)
+   23. Responsive Breakpoints
+       23a. Large screens (≥ 1440px)
+       23b. Tablet (≤ 1024px)
+       23c. Mobile (≤ 767px)
+       23d. Small mobile (≤ 640px)
+       23e. Extra-small mobile (≤ 480px)
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ══════════════════════════════
+   1. RESET & CUSTOM PROPERTIES
+══════════════════════════════ */
+
 *,
 *::before,
 *::after {
@@ -20,7 +71,15 @@
   --muted2: #9ca3af;
   --sidebar-w: 232px;
   --header-h: 60px;
+  /* Semantic color tokens — shared across modules */
+  --color-success: #4ade80;
+  --color-danger: #f87171;
+  --color-warning: #fbbf24;
 }
+
+/* ══════════════════════════════
+   2. BASE / BODY
+══════════════════════════════ */
 
 body {
   font-family: "DM Sans", sans-serif;
@@ -33,7 +92,7 @@ body {
 }
 
 /* ══════════════════════════════
-   LAYOUT WRAPPER
+   3. LAYOUT — DASHBOARD WRAPPER
 ══════════════════════════════ */
 
 .dashboard-wrapper {
@@ -44,7 +103,7 @@ body {
 }
 
 /* ══════════════════════════════
-   SIDEBAR
+   4. SIDEBAR
 ══════════════════════════════ */
 
 .sidebar {
@@ -74,7 +133,8 @@ body {
   border-bottom: 1px solid var(--border2);
 }
 
-/* SIDEBAR NAVIGATION */
+/* 4a. Sidebar Navigation */
+
 .nav-section {
   padding: 20px 12px 8px;
 }
@@ -148,7 +208,7 @@ body {
   border-radius: 99px;
 }
 
-/* SIDEBAR FOOTER */
+/* 4b. Sidebar Footer & User Chip */
 
 .sidebar-footer {
   margin-top: auto;
@@ -213,7 +273,7 @@ body {
   white-space: nowrap;
 }
 
-/* USER POPUP */
+/* 4c. User Popup */
 
 .user-popup {
   position: absolute;
@@ -245,7 +305,7 @@ body {
 }
 
 /* ══════════════════════════════
-   MOBILE DRAWER
+   5. MOBILE DRAWER & HAMBURGER
 ══════════════════════════════ */
 
 .mobile-drawer {
@@ -266,8 +326,6 @@ body {
   background: rgba(0, 0, 0, 0.55);
   z-index: 199;
 }
-
-/* HAMBURGER */
 
 .hamburger {
   display: none;
@@ -299,7 +357,7 @@ body {
 }
 
 /* ══════════════════════════════
-   MAIN AREA
+   6. MAIN AREA
 ══════════════════════════════ */
 
 .main {
@@ -314,7 +372,7 @@ body {
 }
 
 /* ══════════════════════════════
-   HEADER / TOPBAR
+   7. TOPBAR / HEADER
 ══════════════════════════════ */
 
 .topbar {
@@ -364,7 +422,7 @@ body {
   flex-shrink: 0;
 }
 
-/* MONTH BADGE */
+/* 7a. Month Badge */
 
 .month-badge {
   background: var(--surface2);
@@ -386,7 +444,7 @@ body {
   color: var(--accent);
 }
 
-/* BUTTONS */
+/* 7b. Buttons */
 
 .btn-sm {
   display: flex;
@@ -430,7 +488,9 @@ body {
   border-color: var(--border2);
 }
 
-/* PAGE CONTENT */
+/* ══════════════════════════════
+   8. PAGE CONTENT
+══════════════════════════════ */
 
 .page-content {
   flex: 1;
@@ -439,93 +499,1228 @@ body {
 }
 
 /* ══════════════════════════════
-   RESPONSIVE — TABLET (768px–1024px)
+   9. QUICK-ADD DROPDOWN
 ══════════════════════════════ */
 
-@media (max-width: 1024px) {
-  :root {
-    --sidebar-w: 200px;
-  }
+.quick-add-wrapper {
+  position: fixed;
+  top: var(--header-h);
+  right: 28px;
+  z-index: 200;
+  height: auto;
+}
 
-  .topbar {
-    padding: 0 20px;
-    gap: 10px;
-  }
+.quick-add-dropdown {
+  position: relative;
+  top: 0;
+  right: 0;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 100;
+  min-width: 160px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
 
-  .page-content {
-    padding: 20px;
+.quick-add-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 7px;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-size: 0.85rem;
+  font-weight: 500;
+  font-family: "DM Sans", sans-serif;
+  cursor: pointer;
+  transition: background 0.15s;
+  text-align: left;
+}
+
+.quick-add-item:hover {
+  background: var(--surface2);
+}
+
+.quick-add-item svg {
+  width: 15px;
+  height: 15px;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════
+   10. DASHBOARD — STAT CARDS
+══════════════════════════════ */
+
+.dash-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.dash-stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 20px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: border-color 0.2s;
+}
+
+.dash-stat-card:hover {
+  border-color: var(--border2);
+}
+
+.dash-stat-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--accent);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.dash-stat-card:hover::before {
+  opacity: 1;
+}
+
+.dash-stat-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dash-stat-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.dash-stat-icon {
+  width: 32px;
+  height: 32px;
+  background: var(--accent-dim);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.dash-stat-icon svg {
+  width: 16px;
+  height: 16px;
+  color: var(--accent);
+}
+
+.dash-stat-value {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.dash-stat-sub {
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.dash-stat-sub-up {
+  color: var(--color-success);
+}
+.dash-stat-sub-down {
+  color: var(--color-danger);
+}
+
+/* ══════════════════════════════
+   11. DASHBOARD — MID GRID & CHART
+══════════════════════════════ */
+
+.dash-mid-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.dash-chart-wrap {
+  padding: 8px 16px 16px;
+}
+
+.dash-chart-wrap *:focus {
+  outline: none !important;
+}
+
+/* ══════════════════════════════
+   12. DASHBOARD — TOP PERFORMERS
+══════════════════════════════ */
+
+.dash-perf-list {
+  padding: 4px 0 8px;
+}
+
+.dash-perf-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border);
+  gap: 12px;
+}
+
+.dash-perf-row:last-child {
+  border-bottom: none;
+}
+
+.dash-perf-badge {
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: var(--accent-dim);
+  color: var(--accent);
+  border: 1px solid rgba(200, 240, 96, 0.2);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ══════════════════════════════
+   13. STYLES MODULE — TOOLBAR & SEARCH
+══════════════════════════════ */
+
+.styles-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 8px 14px;
+  flex: 1;
+  min-width: 200px;
+  max-width: 400px;
+  transition: border-color 0.15s;
+}
+
+.search-box:focus-within {
+  border-color: var(--accent);
+}
+
+.search-box svg {
+  width: 15px;
+  height: 15px;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.search-box input {
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-size: 0.85rem;
+  font-family: "DM Sans", sans-serif;
+  width: 100%;
+}
+
+.search-box input::placeholder {
+  color: var(--muted);
+}
+
+.filter-select-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.filter-select-wrapper svg {
+  position: absolute;
+  right: 10px;
+  width: 14px;
+  height: 14px;
+  color: var(--muted);
+  pointer-events: none;
+}
+
+.filter-select {
+  appearance: none;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 8px 34px 8px 14px;
+  color: var(--text);
+  font-size: 0.85rem;
+  font-family: "DM Sans", sans-serif;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.filter-select:focus {
+  border-color: var(--accent);
+}
+
+.filter-icon {
+  position: absolute;
+  left: 10px;
+  width: 15px;
+  height: 15px;
+  color: var(--muted);
+  pointer-events: none;
+  display: none;
+}
+
+.filter-chevron {
+  position: absolute;
+  right: 10px;
+  width: 14px;
+  height: 14px;
+  color: var(--muted);
+  pointer-events: none;
+}
+
+/* ══════════════════════════════
+   14. TABLE CARD & STYLES TABLE
+══════════════════════════════ */
+
+.table-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.table-card-header {
+  padding: 18px 24px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+}
+
+.table-card-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.table-card-sub {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.styles-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.styles-table thead tr {
+  border-bottom: 1px solid var(--border);
+}
+
+.styles-table th {
+  padding: 11px 16px;
+  text-align: left;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.styles-table td {
+  padding: 14px 16px;
+  color: var(--muted2);
+  border-bottom: 1px solid var(--border);
+}
+
+.styles-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.styles-table tbody tr {
+  transition: background 0.12s;
+}
+
+.styles-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.style-no {
+  font-size: 0.78rem !important;
+  font-variant-numeric: tabular-nums;
+}
+
+.style-name {
+  color: var(--text) !important;
+  font-weight: 500;
+}
+
+.style-rate {
+  color: var(--accent) !important;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.table-empty {
+  text-align: center;
+  padding: 48px 16px !important;
+  color: var(--muted) !important;
+  font-size: 0.85rem;
+}
+
+.table-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--muted);
+}
+
+/* ══════════════════════════════
+   15. BADGES
+══════════════════════════════ */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 99px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.badge-active {
+  background: rgba(74, 222, 128, 0.1);
+  color: var(--color-success);
+}
+
+.badge-active .badge-dot {
+  background: var(--color-success);
+}
+
+.badge-inactive {
+  background: rgba(248, 113, 113, 0.1);
+  color: var(--color-danger);
+}
+
+.badge-inactive .badge-dot {
+  background: var(--color-danger);
+}
+
+.badge-dept-prod .badge-dot,
+.badge-dept-fin .badge-dot {
+  display: none;
+}
+
+.badge-leave {
+  background: rgba(251, 191, 36, 0.1);
+  color: var(--color-warning);
+}
+
+.badge-leave .badge-dot {
+  background: var(--color-warning);
+}
+
+.badge-wages-pending {
+  background: rgba(251, 191, 36, 0.1);
+  color: var(--color-warning);
+  border: 1px solid rgba(251, 191, 36, 0.2);
+}
+
+.badge-wages-pending .badge-dot {
+  background: var(--color-warning);
+}
+
+/* ══════════════════════════════
+   16. ACTION BUTTON
+══════════════════════════════ */
+
+.action-btn {
+  background: none;
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  padding: 6px;
+  cursor: pointer;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.action-btn:hover {
+  background: var(--surface2);
+  color: var(--text);
+  border-color: var(--border2);
+}
+
+.action-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ══════════════════════════════
+   17. MODAL
+══════════════════════════════ */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 14px;
+  width: 100%;
+  max-width: 540px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-header h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  border-radius: 6px;
+  transition:
+    color 0.15s,
+    background 0.15s;
+}
+
+.modal-close:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.modal-close svg {
+  width: 16px;
+  height: 16px;
+}
+
+.modal-body {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modal-error {
+  background: rgba(248, 113, 113, 0.1);
+  border: 1px solid rgba(248, 113, 113, 0.2);
+  color: var(--color-danger);
+  font-size: 0.8rem;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--muted2);
+}
+
+.required {
+  color: var(--color-danger);
+}
+
+.form-group input,
+.form-group select {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 9px 12px;
+  color: var(--text);
+  font-size: 0.85rem;
+  font-family: "DM Sans", sans-serif;
+  outline: none;
+  transition: border-color 0.15s;
+  width: 100%;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: var(--accent);
+}
+
+.form-group input::placeholder {
+  color: var(--muted);
+}
+
+.form-group select {
+  appearance: none;
+  cursor: pointer;
+}
+
+.modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 24px 20px;
+  border-top: 1px solid var(--border);
+}
+
+/* 17a. Modal — Rate Section (Style Modal) */
+
+.modal-lg {
+  max-width: 560px;
+  width: 100%;
+}
+
+.rate-section {
+  margin-top: 20px;
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 16px;
+  background: var(--surface2);
+}
+
+.rate-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.rate-section-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted2);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.rate-tabs {
+  display: flex;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 3px;
+  gap: 2px;
+}
+
+.rate-tab {
+  padding: 5px 14px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.rate-tab.active {
+  background: var(--surface2);
+  color: var(--text);
+  border: 1px solid var(--border2);
+}
+
+.rate-tab:hover:not(.active) {
+  color: var(--text);
+}
+
+.vendor-rate-group {
+  margin-bottom: 14px;
+}
+
+.rate-hint {
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.role-rates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.rate-preview {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rate-preview-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--muted2);
+}
+
+.rate-preview-margin {
+  border-top: 1px solid var(--border);
+  padding-top: 6px;
+  margin-top: 2px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.margin-positive {
+  color: var(--color-success);
+}
+.margin-negative {
+  color: var(--color-danger);
+}
+
+/* ══════════════════════════════
+   18. PAYROLL MODULE
+══════════════════════════════ */
+
+/* 18a. Cycle Selector */
+
+.cycle-selector {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.cycle-select {
+  min-width: 260px;
+}
+
+.last-calculated {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+/* 18b. Summary Card */
+
+.payroll-summary {
+  background: linear-gradient(
+    135deg,
+    rgba(200, 240, 96, 0.12) 0%,
+    rgba(200, 240, 96, 0.03) 100%
+  );
+  border: 1px solid rgba(200, 240, 96, 0.2);
+  border-radius: 12px;
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.payroll-summary-left {
+  flex: 1;
+  min-width: 0;
+}
+
+.summary-period {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.summary-total {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.summary-sub {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.payroll-summary-right {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex-shrink: 0;
+}
+
+.summary-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.summary-stat-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.summary-stat-accent {
+  color: var(--color-success);
+}
+.summary-stat-muted {
+  color: var(--color-danger);
+}
+
+.summary-stat-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* 18c. Payroll Table */
+
+.payroll-styles-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.payroll-style-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.payroll-style-name {
+  font-size: 0.82rem;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.payroll-style-detail {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.payroll-pieces-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.payroll-piece-row {
+  font-size: 0.85rem;
+  color: var(--accent);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.6;
+}
+
+.payroll-no-entries {
+  color: var(--muted);
+}
+
+.payroll-piece-row.style-no {
+  color: var(--text);
+  font-weight: 400;
+}
+
+/* ══════════════════════════════
+   19. PRODUCTION MODULE
+══════════════════════════════ */
+
+.pe-qty {
+  color: var(--accent) !important;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.pe-rate {
+  color: var(--muted2) !important;
+  font-variant-numeric: tabular-nums;
+}
+
+.pe-amount {
+  color: var(--text) !important;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.pe-date {
+  color: var(--muted2) !important;
+  white-space: nowrap;
+  font-size: 0.82rem;
+}
+
+/* Entry Preview Box */
+
+.entry-preview {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.entry-preview-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.83rem;
+  color: var(--muted2);
+}
+
+.entry-preview-amount {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.entry-edit-note {
+  font-size: 0.75rem;
+  color: var(--color-warning);
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
+/* Delete Button */
+
+.btn-danger {
+  background: rgba(248, 113, 113, 0.1);
+  color: var(--color-danger);
+  border: 1px solid rgba(248, 113, 113, 0.2);
+  margin-right: auto;
+}
+
+.btn-danger:hover {
+  background: rgba(248, 113, 113, 0.2);
+}
+
+.btn-danger-confirm {
+  background: var(--color-danger);
+  color: #0b0d11;
+  border: none;
+  margin-right: auto;
+}
+
+.btn-danger-confirm:hover {
+  background: #ef4444;
+}
+
+/* Read-only Input */
+
+.input-readonly {
+  background: var(--bg) !important;
+  color: var(--muted) !important;
+  cursor: not-allowed;
+  border-color: var(--border) !important;
+}
+
+/* Worker Context Pills */
+
+.entry-worker-context {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.context-pill {
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: var(--accent-dim);
+  color: var(--accent);
+  border: 1px solid rgba(200, 240, 96, 0.2);
+}
+
+.context-rate {
+  font-size: 0.78rem;
+  color: var(--muted2);
+  margin-left: 4px;
+}
+
+/* ══════════════════════════════
+   20. WAGES MODULE
+══════════════════════════════ */
+
+/* Expense Column */
+
+.wages-expense-val {
+  color: var(--color-danger);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.wages-expense-empty {
+  color: var(--muted);
+}
+
+.wages-net {
+  font-weight: 700;
+}
+
+/* Actions */
+
+.wages-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.wages-btn-expense {
+  font-size: 0.75rem;
+  padding: 5px 10px;
+  white-space: nowrap;
+}
+
+.wages-btn-pay {
+  font-size: 0.75rem;
+  padding: 5px 12px;
+  white-space: nowrap;
+}
+
+/* Expense Hint */
+
+.wages-expense-hint {
+  font-size: 0.73rem;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+/* Receipt Modal */
+
+.modal-receipt {
+  max-width: 560px;
+  width: 100%;
+}
+
+.modal-header-sub {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.receipt-body {
+  padding: 0 !important;
+  overflow: hidden;
+  border-radius: 0 0 8px 8px;
+}
+
+.receipt-iframe {
+  width: 100%;
+  height: 480px;
+  border: none;
+  display: block;
+}
+
+/* ══════════════════════════════
+   21. WORKERS MODULE
+══════════════════════════════ */
+
+.worker-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.worker-avatar {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  border-radius: 50%;
+  background: var(--accent-dim);
+  border: 1px solid rgba(200, 240, 96, 0.2);
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.worker-info {
+  min-width: 0;
+}
+
+.worker-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.worker-email {
+  font-size: 0.72rem;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.worker-phone {
+  font-variant-numeric: tabular-nums;
+  color: var(--muted2);
+  white-space: nowrap;
+}
+
+/* ══════════════════════════════
+   22. SHARED UTILITIES
+══════════════════════════════ */
+
+/* ══════════════════════════════
+   SCROLLBAR
+══════════════════════════════ */
+
+:root {
+  --sb-w: 6px;
+  --sb-radius: 99px;
+  --sb-thumb: #2a2f3a;
+  --sb-thumb-hover: #c8f060;
+  --sb-thumb-active: #a8d040;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--sb-thumb) transparent;
+}
+
+/* Chromium / Safari */
+::-webkit-scrollbar {
+  width: var(--sb-w);
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: var(--sb-radius);
+  margin: 6px 0;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb);
+  border-radius: var(--sb-radius);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--sb-thumb-hover);
+}
+::-webkit-scrollbar-thumb:active {
+  background: var(--sb-thumb-active);
+}
+
+/* ══════════════════════════════
+    LOADING SPINNER
+══════════════════════════════ */
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border2);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }
 
 /* ══════════════════════════════
-   RESPONSIVE — MOBILE (< 768px)
+   23. RESPONSIVE BREAKPOINTS
 ══════════════════════════════ */
 
-@media (max-width: 767px) {
-  /* Hide desktop sidebar, show mobile drawer + hamburger */
-  .desktop-sidebar {
-    display: none;
-  }
-
-  .mobile-drawer {
-    display: flex;
-  }
-
-  .drawer-overlay {
-    display: block;
-  }
-
-  .hamburger {
-    display: flex;
-  }
-
-  /* Main takes full width */
-  .main {
-    margin-left: 0;
-  }
-
-  /* Topbar */
-  .topbar {
-    padding: 0 16px;
-    gap: 8px;
-  }
-
-  /* Reserve space so title doesn't sit under hamburger */
-  .topbar-hamburger-slot {
-    display: block;
-    width: 38px;
-    flex-shrink: 0;
-  }
-
-  .topbar-title {
-    font-size: 1rem;
-  }
-
-  .topbar-right {
-    gap: 6px;
-  }
-
-  /* Icon-only buttons on mobile */
-  .month-badge {
-    display: none;
-  }
-
-  .btn-label {
-    display: none;
-  }
-
-  .btn-sm {
-    padding: 7px 9px;
-  }
-
-  .page-content {
-    padding: 16px;
-  }
-}
-
-/* ══════════════════════════════
-   RESPONSIVE — LARGE (> 1440px)
-══════════════════════════════ */
+/* 23a. Large screens (≥ 1440px) */
 
 @media (min-width: 1440px) {
   :root {
@@ -542,5 +1737,216 @@ body {
 
   .topbar-title {
     font-size: 1.25rem;
+  }
+}
+
+/* 23b. Tablet (≤ 1024px) */
+
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-w: 200px;
+  }
+
+  .topbar {
+    padding: 0 20px;
+    gap: 10px;
+  }
+
+  .page-content {
+    padding: 20px;
+  }
+
+  .dash-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dash-mid-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-total {
+    font-size: 1.9rem;
+  }
+
+  .payroll-summary-right {
+    gap: 20px;
+  }
+}
+
+/* 23c. Mobile (≤ 767px) */
+
+@media (max-width: 767px) {
+  .desktop-sidebar {
+    display: none;
+  }
+
+  .mobile-drawer {
+    display: flex;
+  }
+
+  .drawer-overlay {
+    display: block;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .main {
+    margin-left: 0;
+  }
+
+  /* Topbar */
+  .topbar {
+    padding: 0 16px;
+    gap: 8px;
+  }
+
+  .topbar-hamburger-slot {
+    display: block;
+    width: 38px;
+    flex-shrink: 0;
+  }
+
+  .topbar-title {
+    font-size: 1rem;
+  }
+
+  .topbar-right {
+    gap: 6px;
+  }
+
+  .month-badge {
+    display: none;
+  }
+
+  .btn-label {
+    display: none;
+  }
+
+  .btn-sm {
+    padding: 7px 9px;
+  }
+
+  .page-content {
+    padding: 16px;
+  }
+
+  /* Styles module */
+  .styles-toolbar {
+    gap: 8px;
+  }
+
+  .search-box {
+    max-width: 100%;
+  }
+
+  .styles-table th,
+  .styles-table td {
+    padding: 10px 12px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .modal {
+    max-width: 100%;
+  }
+
+  .filter-icon {
+    display: block;
+  }
+
+  .filter-select {
+    padding: 8px 28px 8px 32px;
+    width: 10px;
+  }
+
+  /* Payroll module */
+  .payroll-summary {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 18px 20px;
+  }
+
+  .summary-total {
+    font-size: 1.7rem;
+  }
+
+  .payroll-summary-right {
+    width: 100%;
+    justify-content: space-between;
+    gap: 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .cycle-select {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .payroll-style-detail {
+    display: none;
+  }
+
+  /* Wages module */
+  .wages-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .receipt-iframe {
+    height: 360px;
+  }
+}
+
+/* 23d. Small mobile (≤ 640px) */
+
+@media (max-width: 640px) {
+  .dash-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .dash-stat-value {
+    font-size: 1.5rem;
+  }
+
+  .dash-stat-label {
+    padding-right: 10px;
+  }
+}
+
+/* 23e. Extra-small mobile (≤ 480px) */
+
+@media (max-width: 480px) {
+  .modal,
+  .modal-lg {
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
+    border-radius: 20px 20px 0 0;
+    border-bottom: none;
+    max-height: 90dvh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .modal-body {
+    overflow-y: auto;
+    flex: 1;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .rate-tabs {
+    width: 100%;
+  }
+
+  .rate-tab {
+    flex: 1;
+    text-align: center;
   }
 }

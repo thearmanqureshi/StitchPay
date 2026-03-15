@@ -116,6 +116,29 @@ export default function LogEntryModal({
 
   const handleDelete = async () => {
     if (!confirmDelete) {
+      // Check if this entry falls within a paid wage cycle for this worker
+      const { data: paidCycle, error: paymentError } = await supabase
+        .from("wage_payments")
+        .select("id")
+        .eq("worker_id", entry!.worker_id)
+        .eq("payment_status", "Paid")
+        .lte("cycle_start", entry!.entry_date)
+        .gte("cycle_end", entry!.entry_date)
+        .limit(1)
+        .maybeSingle();
+
+      if (paymentError) {
+        setError(paymentError.message);
+        return;
+      }
+
+      if (paidCycle) {
+        setError(
+          "This entry cannot be deleted because the worker has already been paid for this cycle.",
+        );
+        return;
+      }
+
       setConfirmDelete(true);
       return;
     }

@@ -4,8 +4,7 @@ import { useState, useEffect } from "react";
 import Header from "@/components/dashboard/Header";
 import { supabase } from "@/lib/supabase/client";
 import LogEntryModal from "@/components/dashboard/production/logentry";
-import "@/app/styles.css";
-import "@/app/production.css";
+import "@/app/dashboard.css";
 
 interface ProductionEntry {
   id: string;
@@ -76,11 +75,13 @@ export default function ProductionPage() {
         .from("workers")
         .select("id, name, worker_id, role, department")
         .eq("user_id", user.id)
+        .eq("status", "Active")
         .order("worker_id"),
       supabase
         .from("styles")
         .select("id, style_name, style_no")
         .eq("user_id", user.id)
+        .eq("status", "Active")
         .order("style_no"),
     ]);
 

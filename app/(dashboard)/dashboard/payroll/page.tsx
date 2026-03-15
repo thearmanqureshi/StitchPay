@@ -3,8 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Header from "@/components/dashboard/Header";
 import { supabase } from "@/lib/supabase/client";
-import "@/app/styles.css";
-import "@/app/payroll.css";
+import "@/app/dashboard.css";
 
 interface Worker {
   id: string;
