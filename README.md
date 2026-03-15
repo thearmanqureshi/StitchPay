@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="public/Logo.jpeg" alt="StitchPay Logo" width="180" />
+</p>
+
 # StitchPay     
 
 **StitchPay** is a payroll and production management platform designed for small and mid-scale garment manufacturing units. It helps organizations track worker production, calculate wages, and manage payroll efficiently from a single dashboard.
