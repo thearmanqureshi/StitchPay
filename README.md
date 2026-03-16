@@ -10,14 +10,14 @@ The system replaces manual record-keeping with a structured digital workflow tai
 
 ---
 
-# Features
+## Features
 
-## Authentication
+### Authentication
 - Secure login and session management via Supabase Auth
 - Auth guard on all dashboard routes — redirects unauthenticated users to login
 - Session persistence with `onAuthStateChange` listener
 
-## Dashboard
+### Dashboard
 - Live stat cards — Total Workers, Active Styles, Pieces This Month, Total Wages Due
 - Smart delta indicators — % change vs last month for pieces, new worker/style counts
 - Production Overview chart — area chart showing pieces completed per month across last 12 months
@@ -25,7 +25,7 @@ The system replaces manual record-keeping with a structured digital workflow tai
 - Recent Production Entries — last 5 logged entries with worker, style, qty, rate, amount, date
 - Quick Add dropdown — shortcut to Add Style, Add Worker, Log Entry from any page
 
-## Styles Management
+### Styles Management
 - Register garment styles with style number, name, category, company, and status
 - Department-based vendor rates — set what the company pays per piece for Production and Finishing separately
 - Role-based worker rates — set individual rates per role (Singer, Overlock, Flat, Thread Cutting, Ironing) per style
@@ -34,7 +34,7 @@ The system replaces manual record-keeping with a structured digital workflow tai
 - Export styles to CSV
 - Edit and status toggle (Active / Inactive)
 
-## Worker Management
+### Worker Management
 - Add workers with ID, name, email, phone, department, role, and status
 - Fixed departments — Production (Singer, Overlock, Flat) and Finishing (Thread Cutting, Ironing)
 - Role dropdown auto-filters based on selected department
@@ -44,7 +44,7 @@ The system replaces manual record-keeping with a structured digital workflow tai
 - Export workers to CSV
 - Edit and delete workers
 
-## Production Entries
+### Production Entries
 - Log production entries per worker per style with quantity
 - Rate auto-lookup — pulls worker rate from `style_role_rates` based on worker's role and selected style
 - Rate snapshot — rate is frozen at time of logging; future rate changes don't affect past entries
@@ -56,7 +56,7 @@ The system replaces manual record-keeping with a structured digital workflow tai
 - Filter by worker and style, search by entry ID, worker name, or style name
 - Export entries to CSV with department and role columns
 
-## Payroll Calculation
+### Payroll Calculation
 - Auto-calculates gross wages per worker from production entries for the selected 15-day pay cycle
 - 15-day cycle logic — 10th–25th and 25th–10th, auto-detects current cycle on load
 - Switch between last 6 cycles using the cycle selector
@@ -65,7 +65,7 @@ The system replaces manual record-keeping with a structured digital workflow tai
 - Ready / No Data status per worker
 - Export payroll breakdown to CSV
 
-## Monthly Wages
+### Monthly Wages
 - Auto-generates wage sheet from payroll calculations for the selected cycle
 - Disbursement Summary card — total disbursed, paid count, pending count
 - Expense / Deduction — set a single expense amount per worker per cycle (enter 0 if none)
@@ -78,7 +78,7 @@ The system replaces manual record-keeping with a structured digital workflow tai
 - Cycle switching — view and manage wages for any of the last 6 cycles
 - Export wage sheet to CSV
 
-## Database & Security
+### Database & Security
 - Row Level Security (RLS) on all tables — users can only access their own data
 - Unique constraints — style numbers, worker IDs, and entry IDs are unique per user
 - Check constraints — fixed roles, departments, and statuses enforced at DB level
@@ -88,30 +88,30 @@ The system replaces manual record-keeping with a structured digital workflow tai
 
 ---
 
-# Tech Stack
+## Tech Stack
 
-## Frontend
+### Frontend
 - Next.js (App Router)
 - React
 - TypeScript
 - CSS
 
-## Authentication
+### Authentication
 - Supabase Auth
 
-## Backend / Database
+### Backend / Database
 - Supabase
 - PostgreSQL
 
-## Email Service
+### Email Service
 - Gmail SMTP via Nodemailer
 
-## Deployment
+### Deployment
 - Vercel -> https://stitchpay.vercel.app
 
 ---
 
-# 📌 Project Status
+## 📌 Project Status
 
 Currently under active development.
 
@@ -129,26 +129,36 @@ Upcoming:
 
 ---
 
-## Getting Started
-1. Clone the repo
+### Getting Started
+1. Clone the repo ```bashhttps://github.com/thearmanqureshi/StitchPay.git```
 2. Install dependencies: `npm install`
 3. Create `.env.local` and fill in your keys
 4. Run: `npm run dev`
 
 ---
 
-## Environment Variables
+### Environment Variables
+```bash
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
 GMAIL_USER=
 GMAIL_APP_PASSWORD=
+```
 
 ---
 
-# Project Structure
+## Project Structure
 
 ---
 
-# Future Improvements
+## Future Improvements
+
+---
+
+## License
+
+© 2026 StitchPay. All rights reserved.
+
+This repository is publicly visible for portfolio purposes only. No permission is granted to use, copy, modify, or distribute this code for any purpose.
 
 ---
