@@ -1253,6 +1253,66 @@ body {
 /* ══════════════════════════════
    18. PAYROLL MODULE
 ══════════════════════════════ */
+/* Department Margin Cards */
+
+.dept-margin-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.dept-margin-card {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 16px 18px;
+}
+
+.dept-margin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.dept-margin-pieces {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.dept-margin-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dept-margin-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.82rem;
+}
+
+.dept-margin-label { color: var(--muted2); }
+
+.dept-margin-value {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+
+.dept-margin-stat-total {
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+  margin-top: 2px;
+}
+
+.dept-margin-stat-total .dept-margin-label {
+  font-weight: 600;
+  color: var(--text);
+}
 
 /* 18a. Cycle Selector */
 

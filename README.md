@@ -24,6 +24,9 @@ The system replaces manual record-keeping with a structured digital workflow tai
 - Secure login and session management via Supabase Auth
 - Auth guard on all dashboard routes — redirects unauthenticated users to login
 - Session persistence with `onAuthStateChange` listener
+- Password reset via email — sends a reset link to the user's registered email
+
+<img src="public/imagename.png" alt="Feature Name" width="100%" />
 
 ### Dashboard
 - Live stat cards — Total Workers, Active Styles, Pieces This Month, Total Wages Due
@@ -126,5 +129,3 @@ The system replaces manual record-keeping with a structured digital workflow tai
 © 2026 StitchPay. All rights reserved.
 
 This repository is publicly visible for portfolio purposes only. No permission is granted to use, copy, modify, or distribute this code for any purpose.
-
----

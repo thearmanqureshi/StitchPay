@@ -47,6 +47,13 @@ export default function DashboardPage() {
     piecesDelta: 0,
     wages: 0,
     unpaid: 0,
+    totalExpenses: 0,
+    prodMargin: 0,
+    finMargin: 0,
+    prodPaid: 0,
+    finPaid: 0,
+    vendorRevenue: 0, 
+    vendorMargin: 0,
   });
   const [chartData, setChartData] = useState<DayData[]>([]);
   const [topPerformers, setTopPerformers] = useState<TopPerformer[]>([]);
@@ -112,6 +119,15 @@ export default function DashboardPage() {
       1,
     ).toISOString();
 
+    const day = now.getDate();
+    const cycleStart =
+      day >= 25
+        ? new Date(now.getFullYear(), now.getMonth(), 25)
+        : day >= 10
+          ? new Date(now.getFullYear(), now.getMonth(), 10)
+          : new Date(now.getFullYear(), now.getMonth() - 1, 25);
+    const cycleStartStr = cycleStart.toISOString().split("T")[0];
+
     const [
       { count: totalWorkers },
       { count: newWorkers },
@@ -144,7 +160,9 @@ export default function DashboardPage() {
         .gte("created_at", monthStart),
       supabase
         .from("production_entries")
-        .select("worker_id, qty_completed, amount_earned, entry_date")
+        .select(
+          "worker_id, style_id, qty_completed, amount_earned, department, entry_date",
+        )
         .eq("user_id", user.id)
         .gte("entry_date", monthStart)
         .lte("entry_date", monthEnd),
@@ -162,14 +180,9 @@ export default function DashboardPage() {
         .limit(5),
       supabase
         .from("wage_payments")
-        .select("net_wage, payment_status")
+        .select("net_wage, payment_status, expenses")
         .eq("user_id", user.id)
-        .gte(
-          "cycle_start",
-          new Date(now.getFullYear(), now.getMonth(), 1)
-            .toISOString()
-            .split("T")[0],
-        ),
+        .eq("cycle_start", cycleStartStr),
       supabase
         .from("production_entries")
         .select("qty_completed, entry_date")
@@ -177,7 +190,7 @@ export default function DashboardPage() {
         .gte("entry_date", twelveMonthsAgo),
     ]);
 
-    // Stats
+    // Basic stats
     const totalPieces = (entriesThisMonth ?? []).reduce(
       (s: number, e: any) => s + e.qty_completed,
       0,
@@ -198,6 +211,50 @@ export default function DashboardPage() {
     const unpaidCount = (wageData ?? []).filter(
       (w: any) => w.payment_status === "Pending",
     ).length;
+    const totalExpenses = (wageData ?? []).reduce(
+      (s: number, w: any) => s + (w.expenses ?? 0),
+      0,
+    );
+
+    // Fetch vendor rates for dept revenue
+    const styleIds = [
+      ...new Set((entriesThisMonth ?? []).map((e: any) => e.style_id)),
+    ];
+    const vendorRateMap: Record<string, Record<string, number>> = {};
+    if (styleIds.length > 0) {
+      const { data: vendorRates } = await supabase
+        .from("style_department_rates")
+        .select("style_id, department, vendor_rate")
+        .in("style_id", styleIds);
+      (vendorRates ?? []).forEach((r: any) => {
+        if (!vendorRateMap[r.style_id]) vendorRateMap[r.style_id] = {};
+        vendorRateMap[r.style_id][r.department] = r.vendor_rate;
+      });
+    }
+
+    // Production / Finishing / total vendor revenue
+    let prodRevenue = 0;
+    let finRevenue = 0;
+    (entriesThisMonth ?? []).forEach((e: any) => {
+      const dept = e.department ?? "Production";
+      const vendorRate = vendorRateMap[e.style_id]?.[dept] ?? 0;
+      const earned = vendorRate * e.qty_completed;
+      if (dept === "Production") prodRevenue += earned;
+      else finRevenue += earned;
+    });
+    const vendorRevenue = prodRevenue + finRevenue;
+
+    let prodPaid = 0;
+    let finPaid = 0;
+    (entriesThisMonth ?? []).forEach((e: any) => {
+      const dept = e.department ?? "Production";
+      if (dept === "Production") prodPaid += e.amount_earned;
+      else finPaid += e.amount_earned;
+    });
+
+    const prodMargin = prodRevenue - prodPaid;
+    const finMargin = finRevenue - finPaid;
+    const vendorMargin = prodMargin + finMargin;
 
     // Top performers
     const perfMap: Record<string, { name: string; pieces: number }> = {};
@@ -220,7 +277,7 @@ export default function DashboardPage() {
       .sort((a, b) => b.pieces - a.pieces)
       .slice(0, 4);
 
-    // Chart — pieces per month for last 12 months
+    // Chart
     const monthNames = [
       "Jan",
       "Feb",
@@ -238,8 +295,7 @@ export default function DashboardPage() {
     const monthMap: Record<string, number> = {};
     for (let i = 11; i >= 0; i--) {
       const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-      const key = `${monthNames[d.getMonth()]} ${d.getFullYear()}`;
-      monthMap[key] = 0;
+      monthMap[`${monthNames[d.getMonth()]} ${d.getFullYear()}`] = 0;
     }
     (allEntries ?? []).forEach((e: any) => {
       const d = new Date(e.entry_date);
@@ -251,7 +307,7 @@ export default function DashboardPage() {
       pieces,
     }));
 
-    // Recent entries
+    // Recent
     const recent = (recentEntriesData ?? []).map((e: any) => ({
       id: e.id,
       workerName: e.worker?.name ?? "—",
@@ -271,6 +327,13 @@ export default function DashboardPage() {
       piecesDelta: pieceDelta,
       wages: totalWages,
       unpaid: unpaidCount,
+      totalExpenses,
+      prodMargin,
+      finMargin,
+      prodPaid,
+      finPaid,
+      vendorRevenue,
+      vendorMargin,
     });
     setChartData(chartArr);
     setTopPerformers(topPerfs);
@@ -304,13 +367,14 @@ export default function DashboardPage() {
   };
 
   const statCards = [
+    // Row 1 — existing 4
     {
       label: "Total Workers",
       value: String(stats.workers),
       sub:
         stats.newWorkers > 0
           ? `↑ ${stats.newWorkers} added this month`
-          : `↓ ${stats.newWorkers} added this month`,
+          : "No new workers this month",
       subUp: stats.newWorkers > 0,
       icon: (
         <svg
@@ -332,7 +396,7 @@ export default function DashboardPage() {
       sub:
         stats.newStyles > 0
           ? `↑ ${stats.newStyles} new styles`
-          : `↓ ${stats.newStyles} new styles`,
+          : "No new styles this month",
       subUp: stats.newStyles > 0,
       icon: (
         <svg
@@ -382,6 +446,75 @@ export default function DashboardPage() {
           <path d="M6 7h12" />
           <path d="M6 11h6a4 4 0 0 0 0-8" />
           <line x1="6" y1="11" x2="18" y2="21" />
+        </svg>
+      ),
+    },
+    {
+      label: "Total Expenses",
+      value: formatAmount(stats.totalExpenses),
+      sub: "Deducted from workers this cycle",
+      subUp: false,
+      icon: (
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <line x1="8" y1="12" x2="16" y2="12" />
+        </svg>
+      ),
+    },
+    {
+      label: "Production Margin",
+      value: formatAmount(stats.prodMargin),
+      sub: `Paid ${formatAmount(stats.prodPaid)} to workers`,
+      subUp: true,
+      icon: (
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+        >
+          <rect x="2" y="7" width="20" height="14" rx="2" />
+          <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
+        </svg>
+      ),
+    },
+    {
+      label: "Finishing Margin",
+      value: formatAmount(stats.finMargin),
+      sub: `Paid ${formatAmount(stats.finPaid)} to workers`,
+      subUp: true,
+      icon: (
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+        >
+          <path d="M12 2L2 7l10 5 10-5-10-5z" />
+          <path d="M2 17l10 5 10-5" />
+          <path d="M2 12l10 5 10-5" />
+        </svg>
+      ),
+    },
+    {
+      label: "Total Vendor Revenue",
+      value: formatAmount(stats.vendorRevenue),
+      sub: `Your margin ${formatAmount(stats.vendorMargin)} after worker payments`,
+      subUp: true,
+      icon: (
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+        >
+          <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+          <polyline points="17 6 23 6 23 12" />
         </svg>
       ),
     },
@@ -457,7 +590,7 @@ export default function DashboardPage() {
           )}
         </div>
 
-        {/* Stat Cards */}
+        {/* Stat Cards — 4 per row */}
         <div className="dash-stats-grid">
           {statCards.map((card, i) => (
             <div key={i} className="dash-stat-card">
@@ -595,7 +728,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Recent Entries */}
-        <div className="table-card">
+        <div className="table-card dash-recent-card">
           <div className="table-card-header">
             <div>
               <h2 className="table-card-title">Recent Production Entries</h2>

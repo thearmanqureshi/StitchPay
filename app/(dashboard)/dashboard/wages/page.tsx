@@ -127,6 +127,7 @@ export default function WagesPage() {
       .from("workers")
       .select("id, worker_id, name, email")
       .eq("user_id", user.id)
+      .in("status", ["Active", "On Leave"])
       .order("worker_id");
 
     if (!workers) {
@@ -653,7 +654,7 @@ function buildReceiptHtml({
     <table class="row-table" cellpadding="0" cellspacing="0"><tr><td class="label">Payment Date</td><td class="value">${date}</td></tr></table>
     <table class="row-table" cellpadding="0" cellspacing="0"><tr><td class="label">Total Pieces Completed</td><td class="value">${totalPieces.toLocaleString("en-IN")}</td></tr></table>
     <table class="row-table" cellpadding="0" cellspacing="0"><tr><td class="label">Gross Wage</td><td class="value">₹${grossWage.toLocaleString("en-IN")}</td></tr></table>
-    <table class="row-table" cellpadding="0" cellspacing="0" style="border-bottom:none"><tr><td class="label">Expenses / Deductions</td><td class="value">- ₹${expenses.toLocaleString("en-IN")}</td></tr></table>
+    <table class="row-table" cellpadding="0" cellspacing="0" style="border-bottom:none"><tr><td class="label">Expenses (Kharcha)</td><td class="value">- ₹${expenses.toLocaleString("en-IN")}</td></tr></table>
     <div class="net-wrap">
       <table class="net-table" cellpadding="0" cellspacing="0"><tr><td class="label">Net Wage Paid</td><td class="value">₹${netWage.toLocaleString("en-IN")}</td></tr></table>
     </div>
