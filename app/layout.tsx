@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { DM_Sans, DM_Serif_Display } from "next/font/google";
 import "./auth.css";
 
@@ -12,6 +13,13 @@ const dmSerif = DM_Serif_Display({
   weight: ["400"],
   variable: "--font-serif",
 });
+
+export const metadata: Metadata = {
+  title: {
+    template: "%s · StitchPay",
+    default: "StitchPay",
+  },
+};
 
 export default function RootLayout({
   children,

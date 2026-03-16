@@ -38,9 +38,7 @@ export default function DashboardLayout({
     <div className="dashboard-wrapper">
       <Sidebar />
 
-      <div className="main">
-        {children}
-      </div>
+      <div className="main">{children}</div>
     </div>
   );
 }

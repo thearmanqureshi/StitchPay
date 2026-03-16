@@ -2,6 +2,14 @@
   <img src="public/Logo.jpeg" alt="StitchPay Logo" width="180" />
 </p>
 
+<p align="center">
+  <a href="https://stitchpay.vercel.app">
+    <img src="https://img.shields.io/badge/-stitchpay.vercel.app-c8f060?style=for-the-badge" />
+  </a>
+</p>
+
+---
+
 # StitchPay     
 
 **StitchPay** is a payroll and production management platform designed for small and mid-scale garment manufacturing units. It helps organizations track worker production, calculate wages, and manage payroll efficiently from a single dashboard.
@@ -43,6 +51,7 @@ The system replaces manual record-keeping with a structured digital workflow tai
 - This Month column — live piece count from production entries for the current month
 - Export workers to CSV
 - Edit and delete workers
+- Active / On Leave / Inactive status per worker
 
 ### Production Entries
 - Log production entries per worker per style with quantity
@@ -91,67 +100,24 @@ The system replaces manual record-keeping with a structured digital workflow tai
 ## Tech Stack
 
 ### Frontend
-- Next.js (App Router)
-- React
-- TypeScript
-- CSS
+![Next.js](https://img.shields.io/badge/Next.js%20%28App%20Router%29-000?style=flat-square&logo=nextdotjs)
+![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=000)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![Css](https://img.shields.io/badge/Css-633194?style=flat-square&logo=css)
 
 ### Authentication
-- Supabase Auth
+![Supabase](https://img.shields.io/badge/Supabase%20%28Auth%29-3ECF8E?style=flat-square&logo=supabase&logoColor=white)
 
 ### Backend / Database
-- Supabase
-- PostgreSQL
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=flat-square&logo=supabase&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white)
 
 ### Email Service
-- Gmail SMTP via Nodemailer
+![Nodemailer](https://img.shields.io/badge/Nodemailer%20%28Gmail%20SMTP%29-EA4335?style=flat-square&logo=gmail&logoColor=white)
 
 ### Deployment
-- Vercel -> https://stitchpay.vercel.app
+[![Vercel](https://img.shields.io/badge/Vercel-000?style=flat-square&logo=vercel)](https://stitchpay.vercel.app) [![Live](https://img.shields.io/badge/stitchpay.vercel.app-000?style=flat-square)](https://stitchpay.vercel.app)
 
----
-
-## 📌 Project Status
-
-Currently under active development.
-
-All Core modules implemented:
-- Authentication
-- Dashboard
-- Styles
-- Workers
-- Production Entries
-- Payroll Calculation
-- Monthly Wages
-
-Upcoming:
-- Live Testing in production & Improving issues found
-
----
-
-### Getting Started
-1. Clone the repo ```bashhttps://github.com/thearmanqureshi/StitchPay.git```
-2. Install dependencies: `npm install`
-3. Create `.env.local` and fill in your keys
-4. Run: `npm run dev`
-
----
-
-### Environment Variables
-```bash
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-GMAIL_USER=
-GMAIL_APP_PASSWORD=
-```
-
----
-
-## Project Structure
-
----
-
-## Future Improvements
 
 ---
 
