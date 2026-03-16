@@ -26,10 +26,10 @@ The system replaces manual record-keeping with a structured digital workflow tai
 - Session persistence with `onAuthStateChange` listener
 - Password reset via email — sends a reset link to the user's registered email
 
-<img src="public/imagename.png" alt="Feature Name" width="100%" />
+<!-- <img src="public/imagename.png" alt="Feature Name" width="100%" /> -->
 
 ### Dashboard
-- Live stat cards — Total Workers, Active Styles, Pieces This Month, Total Wages Due
+- Live stat cards — Total Workers, Active Styles, Pieces This Month, Total Wages Due, Total Expenses Deducted, Production Margin, Finishing Margin, Total Vendor Revenue
 - Smart delta indicators — % change vs last month for pieces, new worker/style counts
 - Production Overview chart — area chart showing pieces completed per month across last 12 months
 - Top Performers — top 4 workers by pieces completed this month
@@ -62,7 +62,7 @@ The system replaces manual record-keeping with a structured digital workflow tai
 - Rate snapshot — rate is frozen at time of logging; future rate changes don't affect past entries
 - Department and role snapshots stored on each entry
 - Worker and style dropdowns show IDs alongside names
-- Only Active workers appear in the log entry dropdown
+- Only Active workers & styles appear in the log entry dropdown
 - Edit entries — only quantity is editable after logging; worker, style, and rate are locked
 - Delete entries — blocked by DB trigger if worker has already been paid for that cycle
 - Filter by worker and style, search by entry ID, worker name, or style name
@@ -87,6 +87,7 @@ The system replaces manual record-keeping with a structured digital workflow tai
 - Resend receipt — resend the stored receipt to the worker's email from the view modal
 - View receipt — eye icon opens the stored receipt in an iframe modal
 - Pieces and wages frozen after marking paid — new entries after payment don't affect paid records
+- Inactive workers doesn't appear in the wage sheet
 - Cycle switching — view and manage wages for any of the last 6 cycles
 - Export wage sheet to CSV
 
