@@ -12,9 +12,9 @@
 
 # StitchPay     
 
-**StitchPay** is a payroll and production management platform designed for small and mid-scale garment manufacturing units. It helps organizations track worker production, calculate wages, and manage payroll efficiently from a single dashboard.
+**StitchPay** is a production-driven payroll platform built for small and mid-scale garment manufacturing units. It enables businesses to track worker output, automate wage calculations, and manage payroll seamlessly from a unified dashboard.
 
-The system replaces manual record-keeping with a structured digital workflow tailored for tailoring and garment stitching businesses.
+By replacing manual record-keeping with a structured digital workflow, StitchPay brings accuracy, transparency, and efficiency to tailoring and garment stitching operations.
 
 ---
 
@@ -107,7 +107,7 @@ The system replaces manual record-keeping with a structured digital workflow tai
 ![Next.js](https://img.shields.io/badge/Next.js%20%28App%20Router%29-000?style=flat-square&logo=nextdotjs)
 ![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=000)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
-![Css](https://img.shields.io/badge/Css-633194?style=flat-square&logo=css)
+![Css](https://img.shields.io/badge/CSS-633194?style=flat-square&logo=css)
 
 ### Authentication
 ![Supabase](https://img.shields.io/badge/Supabase%20%28Auth%29-3ECF8E?style=flat-square&logo=supabase&logoColor=white)

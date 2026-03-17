@@ -36,13 +36,13 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
           </div>
 
           <div className="stat">
-            <div className="stat-num">100%</div>
-            <div className="stat-label">Worker Clarity</div>
+            <div className="stat-num">Auto</div>
+            <div className="stat-label">Wage Calculations</div>
           </div>
 
           <div className="stat">
-            <div className="stat-num">Piece-rate</div>
-            <div className="stat-label">Auto Wage Calc</div>
+            <div className="stat-num">Email</div>
+            <div className="stat-label">Payslips sent in one click</div>
           </div>
         </div>
       </section>
