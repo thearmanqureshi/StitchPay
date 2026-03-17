@@ -65,29 +65,55 @@ export default function ProductionPage() {
   };
 
   const fetchWorkersAndStyles = async () => {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (!user) return;
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return;
 
-    const [{ data: w }, { data: s }] = await Promise.all([
-      supabase
-        .from("workers")
-        .select("id, name, worker_id, role, department")
-        .eq("user_id", user.id)
-        .eq("status", "Active")
-        .order("worker_id"),
-      supabase
-        .from("styles")
-        .select("id, style_name, style_no")
-        .eq("user_id", user.id)
-        .eq("status", "Active")
-        .order("style_no"),
-    ]);
+  const [{ data: w }, { data: s }] = await Promise.all([
+    supabase
+      .from("workers")
+      .select("id, name, worker_id, role, department")
+      .eq("user_id", user.id)
+      .eq("status", "Active")
+      .order("worker_id"),
+    supabase
+      .from("styles")
+      .select("id, style_name, style_no")
+      .eq("user_id", user.id)
+      .eq("status", "Active")
+      .order("style_no"),
+  ]);
 
-    if (w) setWorkers(w);
-    if (s) setStyles(s);
-  };
+  const now = new Date();
+  const day = now.getDate();
+
+  const cycleStart =
+    day >= 25
+      ? new Date(now.getFullYear(), now.getMonth(), 25)
+      : day >= 10
+      ? new Date(now.getFullYear(), now.getMonth(), 10)
+      : new Date(now.getFullYear(), now.getMonth() - 1, 25);
+
+  const cycleStartStr = cycleStart.toISOString().split("T")[0];
+
+  const { data: paidWorkers } = await supabase
+    .from("wage_payments")
+    .select("worker_id")
+    .eq("user_id", user.id)
+    .eq("cycle_start", cycleStartStr)
+    .eq("payment_status", "Paid");
+
+  const paidWorkerIds = new Set(
+    (paidWorkers ?? []).map((p) => p.worker_id)
+  );
+
+  if (w) {
+    setWorkers(w.filter((worker) => !paidWorkerIds.has(worker.id)));
+  }
+
+  if (s) setStyles(s);
+};
 
   useEffect(() => {
     fetchEntries();

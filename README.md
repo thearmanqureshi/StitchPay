@@ -70,7 +70,7 @@ By replacing manual record-keeping with a structured digital workflow, StitchPay
 - Rate snapshot — rate is frozen at time of logging; future rate changes don't affect past entries
 - Department and role snapshots stored on each entry
 - Worker and style dropdowns show IDs alongside names
-- Only Active workers & styles appear in the log entry dropdown
+- Only Active workers with payment status pending & Active Styles appear in the log entry dropdown
 - Edit entries — only quantity is editable after logging; worker, style, and rate are locked
 - Delete entries — blocked by DB trigger if worker has already been paid for that cycle
 - Filter by worker and style, search by entry ID, worker name, or style name
