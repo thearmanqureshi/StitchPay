@@ -26,7 +26,7 @@ By replacing manual record-keeping with a structured digital workflow, StitchPay
 - Session persistence with `onAuthStateChange` listener
 - Password reset via email — sends a reset link to the user's registered email
 
-<!-- <img src="public/imagename.png" alt="Feature Name" width="100%" /> -->
+<img src="public/StitchpayLogin.png" alt="Login Page" width="100%" />
 
 ### Dashboard
 - Live stat cards — Total Workers, Active Styles, Pieces This Month, Total Wages Due, Total Expenses Deducted, Production Margin, Finishing Margin, Total Vendor Revenue
@@ -36,6 +36,8 @@ By replacing manual record-keeping with a structured digital workflow, StitchPay
 - Recent Production Entries — last 5 logged entries with worker, style, qty, rate, amount, date
 - Quick Add dropdown — shortcut to Add Style, Add Worker, Log Entry from any page
 
+<img src="public/StitchpayDashboard.png" alt="Stitchpay Dashboard" width="100%" />
+
 ### Styles Management
 - Register garment styles with style number, name, category, company, and status
 - Department-based vendor rates — set what the company pays per piece for Production and Finishing separately
@@ -44,6 +46,9 @@ By replacing manual record-keeping with a structured digital workflow, StitchPay
 - Filter by category, search by style name, style number, or company
 - Export styles to CSV
 - Edit and status toggle (Active / Inactive)
+
+<img src="public/StitchpayStyles.png" alt="Styles Page" width="100%" />
+<img src="public/StitchpayAddstyles.png" alt="Add Style Modal" width="100%" />
 
 ### Worker Management
 - Add workers with ID, name, email, phone, department, role, and status
@@ -55,6 +60,9 @@ By replacing manual record-keeping with a structured digital workflow, StitchPay
 - Export workers to CSV
 - Edit and delete workers
 - Active / On Leave / Inactive status per worker
+
+<img src="public/StitchpayWorkers.png" alt="Workers Page" width="100%" />
+<img src="public/StitchpayAddworkers.png" alt="Add Worker Modal" width="100%" />
 
 ### Production Entries
 - Log production entries per worker per style with quantity
@@ -68,6 +76,9 @@ By replacing manual record-keeping with a structured digital workflow, StitchPay
 - Filter by worker and style, search by entry ID, worker name, or style name
 - Export entries to CSV with department and role columns
 
+<img src="public/StitchpayProduction.png" alt="Production Page" width="100%" />
+<img src="public/StitchpayLogentry.png" alt="Log Entry Modal" width="100%" />
+
 ### Payroll Calculation
 - Auto-calculates gross wages per worker from production entries for the selected 15-day pay cycle
 - 15-day cycle logic — 10th–25th and 25th–10th, auto-detects current cycle on load
@@ -76,6 +87,8 @@ By replacing manual record-keeping with a structured digital workflow, StitchPay
 - Recalculate button — re-fetches and recomputes on demand with last calculated timestamp
 - Ready / No Data status per worker
 - Export payroll breakdown to CSV
+
+<img src="public/StitchpayPayroll.png" alt="Payroll Page" width="100%" />
 
 ### Monthly Wages
 - Auto-generates wage sheet from payroll calculations for the selected cycle
@@ -90,6 +103,9 @@ By replacing manual record-keeping with a structured digital workflow, StitchPay
 - Inactive workers doesn't appear in the wage sheet
 - Cycle switching — view and manage wages for any of the last 6 cycles
 - Export wage sheet to CSV
+
+<img src="public/StitchpayWages.png" alt="Wages Page" width="100%" />
+<img src="public/StitchpayWagereceipt.png" alt="View Email Receipt" width="100%" />
 
 ### Database & Security
 - Row Level Security (RLS) on all tables — users can only access their own data

@@ -146,13 +146,14 @@ export default function ProductionPage() {
       year: "numeric",
     });
 
-  const getInitials = (name: string) =>
-    name
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .slice(0, 2)
-      .toUpperCase();
+  const getInitials = (name: string) => {
+    const parts = name.trim().split(" ");
+    return (
+      parts.length >= 2
+        ? `${parts[0][0]}${parts[parts.length - 1][0]}`
+        : (parts[0]?.slice(0, 2) ?? "??")
+    ).toUpperCase();
+  };
 
   const currentMonthLabel = new Date().toLocaleString("default", {
     month: "long",
