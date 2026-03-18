@@ -48,7 +48,7 @@ export default function AddStyleModal({
 
   // Worker rates per role
   const [roleRates, setRoleRates] = useState<Record<string, string>>({
-    Signer: "",
+    Singer: "",
     Overlock: "",
     Flat: "",
     "Thread Cutting": "",
@@ -65,7 +65,7 @@ export default function AddStyleModal({
     if (style) {
       setForm({
         style_no: style.style_no,
-        style_name: style.style_name,
+        style_name: form.style_name,
         category: style.category,
         company: style.company,
         status: style.status,

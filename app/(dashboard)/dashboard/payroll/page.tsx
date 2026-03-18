@@ -144,18 +144,18 @@ export default function PayrollPage() {
       const styleName = e.styles?.style_name ?? "Unknown";
       const styleNo = e.styles?.style_no ?? "—";
       const existing = workerMap[e.worker_id].find(
-        (s) => s.style_name === styleName && s.rate === e.rate_per_piece,
+        (s) => s.style_no === styleNo && s.rate === e.rate_per_piece,
       );
       if (existing) {
         existing.qty += e.qty_completed;
-        existing.amount += e.amount_earned;
+        existing.amount = existing.qty * existing.rate; // recalculate from accumulated qty
       } else {
         workerMap[e.worker_id].push({
           style_name: styleName,
           style_no: styleNo,
           qty: e.qty_completed,
           rate: e.rate_per_piece,
-          amount: e.amount_earned,
+          amount: e.qty_completed * e.rate_per_piece, // always derive from qty × rate
         });
       }
     });

@@ -1717,7 +1717,97 @@ body {
 /* ══════════════════════════════
    22. SHARED UTILITIES
 ══════════════════════════════ */
+/* ══════════════════════════════
+   SEARCHABLE SELECT (StitchPay Style)
+══════════════════════════════ */
 
+.searchable-select {
+  position: relative;
+  width: 100%;
+}
+
+/* Input (same as your form inputs) */
+.searchable-select input {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 9px 12px;
+  color: var(--text);
+  font-size: 0.85rem;
+  font-family: "DM Sans", sans-serif;
+  outline: none;
+  transition: border-color 0.15s;
+  width: 100%;
+  cursor: pointer;
+}
+
+.searchable-select input:focus {
+  border-color: var(--accent);
+}
+
+.searchable-select input::placeholder {
+  color: var(--muted);
+}
+
+/* Dropdown panel */
+.searchable-select .dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  max-height: 240px;
+  overflow-y: auto;
+  z-index: 500;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  padding: 4px;
+}
+
+/* Dropdown item */
+.searchable-select .dropdown-item {
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.12s;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Hover (same as table + quick-add feel) */
+.searchable-select .dropdown-item:hover {
+  background: var(--surface2);
+}
+
+/* Selected state */
+.searchable-select .dropdown-item.active {
+  background: var(--accent-dim);
+  border: 1px solid rgba(200, 240, 96, 0.2);
+}
+
+/* Main label */
+.searchable-select .label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+/* Sub label (role, dept, style no) */
+.searchable-select .sublabel {
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Empty state */
+.searchable-select .dropdown-empty {
+  padding: 12px;
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-align: center;
+}
 /* ══════════════════════════════
    SCROLLBAR
 ══════════════════════════════ */

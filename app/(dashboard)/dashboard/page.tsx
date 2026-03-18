@@ -161,14 +161,14 @@ export default function DashboardPage() {
       supabase
         .from("production_entries")
         .select(
-          "worker_id, style_id, qty_completed, amount_earned, department, entry_date",
+          "worker_id, style_id, qty_completed, rate_per_piece, amount_earned, department, entry_date",
         )
         .eq("user_id", user.id)
         .gte("entry_date", monthStart)
         .lte("entry_date", monthEnd),
       supabase
         .from("production_entries")
-        .select("qty_completed")
+        .select("qty_completed, department")
         .eq("user_id", user.id)
         .gte("entry_date", lastMonthStart)
         .lte("entry_date", lastMonthEnd),
@@ -191,12 +191,16 @@ export default function DashboardPage() {
     ]);
 
     // Basic stats
+    // Only count Production dept entries for piece count — Finishing processes the same
+    // physical pieces, so counting both would double-count every piece
     const totalPieces = (entriesThisMonth ?? []).reduce(
-      (s: number, e: any) => s + e.qty_completed,
+      (s: number, e: any) =>
+        (e.department ?? "Production") === "Production" ? s + e.qty_completed : s,
       0,
     );
     const lastPieces = (entriesLastMonth ?? []).reduce(
-      (s: number, e: any) => s + e.qty_completed,
+      (s: number, e: any) =>
+        (e.department ?? "Production") === "Production" ? s + e.qty_completed : s,
       0,
     );
     const pieceDelta =
@@ -216,40 +220,67 @@ export default function DashboardPage() {
       0,
     );
 
-    // Fetch vendor rates for dept revenue
+    // Fetch vendor rates for margin calculation (from style_department_rates)
+    // Worker paid = sum of amount_earned per entry (rate_per_piece x qty logged at entry time)
+    // This matches the wages total — each entry is one worker doing one role on a style
+    // Margin = vendor_rate x qty  -  amount_earned x qty  ("Your Margin" per dept)
     const styleIds = [
       ...new Set((entriesThisMonth ?? []).map((e: any) => e.style_id)),
     ];
+
+    // vendorRateMap[style_id][department] = vendor_rate
     const vendorRateMap: Record<string, Record<string, number>> = {};
     if (styleIds.length > 0) {
-      const { data: vendorRates } = await supabase
+      const { data: deptRates } = await supabase
         .from("style_department_rates")
         .select("style_id, department, vendor_rate")
         .in("style_id", styleIds);
-      (vendorRates ?? []).forEach((r: any) => {
+      (deptRates ?? []).forEach((r: any) => {
         if (!vendorRateMap[r.style_id]) vendorRateMap[r.style_id] = {};
-        vendorRateMap[r.style_id][r.department] = r.vendor_rate;
+        vendorRateMap[r.style_id][r.department] = r.vendor_rate ?? 0;
       });
     }
 
-    // Production / Finishing / total vendor revenue
-    let prodRevenue = 0;
-    let finRevenue = 0;
+    // Vendor revenue must be counted ONCE per batch, not once per entry.
+    // Each batch = one style + one date + one department logged by multiple role workers.
+    // e.g. 100 pcs of Style A on 15 Mar in Production = Singer entry + Overlock entry + Flat entry
+    // Vendor pays once for those 100 pcs — not 3x.
+    // Strategy: group entries by (style_id, entry_date, department), take MAX qty as the batch qty.
+    // MAX qty is used because all role workers log the same qty for the same batch.
+    const batchMap: Record<string, { vendorRate: number; qty: number; dept: string }> = {};
     (entriesThisMonth ?? []).forEach((e: any) => {
       const dept = e.department ?? "Production";
-      const vendorRate = vendorRateMap[e.style_id]?.[dept] ?? 0;
-      const earned = vendorRate * e.qty_completed;
+      const vendorRate = vendorRateMap[e.style_id]?.[dept];
+      if (vendorRate == null) return; // no vendor rate configured, skip
+      const dateStr = e.entry_date?.split("T")[0] ?? e.entry_date;
+      const key = `${e.style_id}__${dateStr}__${dept}`;
+      if (!batchMap[key]) {
+        batchMap[key] = { vendorRate, qty: e.qty_completed, dept };
+      } else {
+        // Take max qty in case entries differ slightly; they should be equal for same batch
+        batchMap[key].qty = Math.max(batchMap[key].qty, e.qty_completed);
+      }
+    });
+
+    let prodRevenue = 0;
+    let finRevenue = 0;
+    Object.values(batchMap).forEach(({ vendorRate, qty, dept }) => {
+      const earned = vendorRate * qty;
       if (dept === "Production") prodRevenue += earned;
       else finRevenue += earned;
     });
     const vendorRevenue = prodRevenue + finRevenue;
 
+    // Worker paid = amount_earned summed per dept from production_entries
+    // amount_earned = rate_per_piece x qty for that specific worker+role entry
+    // Summing these matches Total Wages Due and avoids multiplying all role rates per entry
     let prodPaid = 0;
     let finPaid = 0;
     (entriesThisMonth ?? []).forEach((e: any) => {
       const dept = e.department ?? "Production";
-      if (dept === "Production") prodPaid += e.amount_earned;
-      else finPaid += e.amount_earned;
+      if (vendorRateMap[e.style_id]?.[dept] == null) return; // skip entries with no vendor rate
+      if (dept === "Production") prodPaid += e.amount_earned ?? 0;
+      else finPaid += e.amount_earned ?? 0;
     });
 
     const prodMargin = prodRevenue - prodPaid;

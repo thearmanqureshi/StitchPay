@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase/client";
+import SearchableSelect from "@/components/dashboard/searchableselect";
 
 interface ProductionEntry {
   id: string;
@@ -253,35 +254,37 @@ export default function LogEntryModal({
               <label>
                 Worker <span className="required">*</span>
               </label>
-              <select
-                name="worker_id"
+              <SearchableSelect
                 value={form.worker_id}
-                onChange={handleChange}
+                onChange={(val) =>
+                  setForm((prev) => ({ ...prev, worker_id: val }))
+                }
                 disabled={isEdit}
-              >
-                {workers.map((w) => (
-                  <option key={w.id} value={w.id}>
-                    {w.name} ({w.worker_id})
-                  </option>
-                ))}
-              </select>
+                placeholder="Search worker..."
+                options={workers.map((w) => ({
+                  value: w.id,
+                  label: `${w.name} (${w.worker_id})`,
+                  subLabel: `${w.role} • ${w.department}`,
+                }))}
+              />
             </div>
             <div className="form-group">
               <label>
                 Style <span className="required">*</span>
               </label>
-              <select
-                name="style_id"
+              <SearchableSelect
                 value={form.style_id}
-                onChange={handleChange}
+                onChange={(val) =>
+                  setForm((prev) => ({ ...prev, style_id: val }))
+                }
                 disabled={isEdit}
-              >
-                {styles.map((s) => (
-                  <option key={s.id} value={s.id}>
-                    {s.style_name} ({s.style_no})
-                  </option>
-                ))}
-              </select>
+                placeholder="Search style..."
+                options={styles.map((s) => ({
+                  value: s.id,
+                  label: s.style_name,
+                  subLabel: `Style No: ${s.style_no}`,
+                }))}
+              />
             </div>
           </div>
 
