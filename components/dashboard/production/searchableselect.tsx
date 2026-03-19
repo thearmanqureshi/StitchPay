@@ -48,12 +48,24 @@ export default function SearchableSelect({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Extract last 4 digits from a subLabel string e.g. "Style No: CT04251664" → "1664"
+  const getLast4Digits = (subLabel: string) =>
+    subLabel.replace(/\D/g, "").slice(-4);
+
   return (
     <div className="searchable-select" ref={containerRef}>
       {/* Input */}
       <input
         type="text"
-        value={open ? search : selected?.label || ""}
+        value={
+          open
+            ? search
+            : selected
+            ? selected.subLabel && getLast4Digits(selected.subLabel)
+              ? `${selected.label} (${getLast4Digits(selected.subLabel)})`
+              : selected.label
+            : ""
+        }
         placeholder={placeholder}
         onFocus={() => setOpen(true)}
         onChange={(e) => {
@@ -77,7 +89,9 @@ export default function SearchableSelect({
                   setOpen(false);
                 }}
               >
-                <div className="label">{o.label}</div>
+                <div className="label">
+                  {o.label}
+                </div>
                 {o.subLabel && <div className="sublabel">{o.subLabel}</div>}
               </div>
             ))

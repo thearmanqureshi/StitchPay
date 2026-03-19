@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase/client";
-import SearchableSelect from "@/components/dashboard/searchableselect";
+import SearchableSelect from "@/components/dashboard/production/searchableselect";
 
 interface ProductionEntry {
   id: string;
